@@ -52,6 +52,8 @@ android {
 dependencies {
     val navVersion = "2.7.7"
     val lifecycleCompose = "2.7.0"
+    val retrofit = "2.9.0"
+    val okhttp = "4.11.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -63,9 +65,16 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material:1.6.2")
 
-    // navigation
+    // Navigation
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
+
+    // Retrofit2
+    implementation("com.squareup.retrofit2:retrofit:$retrofit")
+    implementation("com.squareup.retrofit2:converter-gson:$retrofit")
+
+    // OkHttp3
+    implementation("com.squareup.okhttp3:logging-interceptor:$okhttp")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
