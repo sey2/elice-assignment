@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "org.elice.assignment"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "org.elice.assignment"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -50,6 +50,8 @@ android {
 }
 
 dependencies {
+    val navVersion = "2.7.7"
+    val lifecycleCompose = "2.7.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -59,6 +61,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material:1.6.2")
+
+    // navigation
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleCompose")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
