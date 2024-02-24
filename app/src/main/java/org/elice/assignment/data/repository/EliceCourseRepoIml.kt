@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.flow
 import org.elice.assignment.data.source.EliceCourseDataSource
 import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.domain.repository.EliceCourseRepo
+import javax.inject.Inject
 
-class EliceCourseRepoIml(
+class EliceCourseRepoIml @Inject constructor(
     private val eliceCourseDataSource: EliceCourseDataSource
 ) : EliceCourseRepo {
 

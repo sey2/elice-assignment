@@ -1,8 +1,9 @@
 package org.elice.assignment.data.source
 
 import org.elice.assignment.data.api.EliceApiService
+import javax.inject.Inject
 
-class EliceCourseDataSource(
+class EliceCourseDataSource @Inject constructor(
     private val eliceCourseService: EliceApiService
 ) {
     suspend fun getCourseList(

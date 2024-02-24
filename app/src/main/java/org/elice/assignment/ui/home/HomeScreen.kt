@@ -8,32 +8,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import org.elice.assignment.domain.entities.CourseEntity
-import org.elice.assignment.domain.usecase.course.GetEliceCourseList
 import org.elice.assignment.viewmodel.EliceHomeUiState
 import org.elice.assignment.viewmodel.EliceHomeViewModel
 
 @Composable
-fun HomeScreen(navHostController: NavHostController) {
-    val getEliceCourseListUseCase = remember { GetEliceCourseList() }
-
-    val viewModel: EliceHomeViewModel = viewModel(factory = object : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return EliceHomeViewModel(getEliceCourseListUseCase) as T
-        }
-    })
-
-    val eliceHomeUiState by viewModel.homeState.collectAsStateWithLifecycle()
-    val eliceCourseList by viewModel.eliceCourseList.collectAsState()
+fun HomeScreen(
+    navHostController: NavHostController,
+    homeViewModel: EliceHomeViewModel = hiltViewModel()
+) {
+    val eliceHomeUiState by homeViewModel.homeState.collectAsStateWithLifecycle()
+    val eliceCourseList by homeViewModel.eliceCourseList.collectAsState()
 
     HomeContent(
         eliceHomeUiState = eliceHomeUiState,
@@ -53,10 +43,11 @@ internal fun HomeContent(
     ) {
         Text(modifier = Modifier, text = "Home")
 
-        when(eliceHomeUiState){
+        when (eliceHomeUiState) {
             EliceHomeUiState.LOADING -> {
                 // todo loading
             }
+
             EliceHomeUiState.SUCCESS -> {
                 Log.d("API CALL", eliceCourseList.toString())
             }
