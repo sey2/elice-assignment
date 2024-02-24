@@ -35,8 +35,6 @@ internal fun CourseGridList(
     courseList: List<CourseEntity> = listOf(),
     title: String
 ) {
-    val mockTags = listOf("태그 1", "태그 2","태그 2","태그 2","태그 2","태그 2","태그 2","태그 2")
-
     Column(
         modifier = modifier
             .padding(start = 16.dp, top = 8.dp)
@@ -49,6 +47,7 @@ internal fun CourseGridList(
             fontFamily = NotoBold,
             fontSize = 16.sp
         )
+        
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -58,8 +57,8 @@ internal fun CourseGridList(
                 CourseCard(
                     title = courseList[index].title,
                     description = courseList[index].shortDescription ?: "",
-                    imageUrl = imageUrl!!,
-                    tags = mockTags,
+                    imageUrl = imageUrl ?: "",
+                    tags = courseList[index].tagList,
                     modifier = Modifier.padding(end = 8.dp)
                 )
             }
@@ -74,16 +73,16 @@ fun CourseCard(
     title: String,
     description: String,
     imageUrl: String,
-    tags: List<String>,
+    tags: List<String> = listOf(),
     modifier: Modifier = Modifier
 ) {
 
     Column(
-        modifier = modifier
+        modifier = modifier.padding(end= 16.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = imageUrl),
-            contentDescription = "이미지 설명",
+            contentDescription = "Course Image",
             modifier = Modifier
                 .size(width = 200.dp, height = 100.dp)
                 .clip(RoundedCornerShape(10.dp)),
