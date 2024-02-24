@@ -1,8 +1,10 @@
 package org.elice.assignment.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -33,7 +35,7 @@ internal fun CourseGridList(
     courseList: List<CourseEntity> = listOf(),
     title: String
 ) {
-    val mockTags = listOf("태그 1", "태그 2")
+    val mockTags = listOf("태그 1", "태그 2","태그 2","태그 2","태그 2","태그 2","태그 2","태그 2")
 
     Column(
         modifier = modifier
@@ -66,6 +68,7 @@ internal fun CourseGridList(
 }
 
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CourseCard(
     title: String,
@@ -113,8 +116,10 @@ fun CourseCard(
             )
         }
 
-        Row(
-            modifier = Modifier.fillMaxWidth()
+        FlowRow(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            maxItemsInEachRow = 4
         ) {
             tags.forEach { tag ->
                 EliceTag(text = tag)
