@@ -33,7 +33,8 @@ import org.elice.assignment.ui.theme.NotoRegular
 internal fun CourseGridList(
     modifier: Modifier = Modifier,
     courseList: List<CourseEntity> = listOf(),
-    title: String
+    title: String,
+    onLoadMore: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -52,8 +53,13 @@ internal fun CourseGridList(
             modifier = Modifier.fillMaxWidth()
         ) {
             items(courseList.size) { index ->
+                if (index == courseList.size - 1) {
+                    onLoadMore()
+                }
+
                 val imageUrl =
                     if (courseList[index].imageFileUrl == null) courseList[index].logoFileUrl else courseList[index].imageFileUrl
+
                 CourseCard(
                     title = courseList[index].title,
                     description = courseList[index].shortDescription ?: "",
@@ -78,7 +84,7 @@ fun CourseCard(
 ) {
 
     Column(
-        modifier = modifier.padding(end= 16.dp)
+        modifier = modifier.padding(end = 16.dp)
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = imageUrl),
@@ -133,7 +139,8 @@ fun CourseGridPreview() {
     AssignmentTheme {
         CourseGridList(
             courseList = createMockCourseEntity(),
-            title = "무료 과목"
+            title = "무료 과목",
+            onLoadMore = {}
         )
     }
 }
