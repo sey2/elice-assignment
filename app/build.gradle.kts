@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -54,6 +56,7 @@ dependencies {
     val lifecycleCompose = "2.7.0"
     val retrofit = "2.9.0"
     val okhttp = "4.11.0"
+    val hilt = "2.49"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -75,6 +78,11 @@ dependencies {
 
     // OkHttp3
     implementation("com.squareup.okhttp3:logging-interceptor:$okhttp")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:$hilt")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
