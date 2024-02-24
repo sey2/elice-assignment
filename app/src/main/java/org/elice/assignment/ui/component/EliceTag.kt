@@ -18,7 +18,7 @@ fun EliceTag(
     text: String = ""
 ) {
     Surface(
-        modifier = modifier.padding(top = 8.dp, end = 4.dp),
+        modifier = modifier.padding(top = 8.dp),
         color = Color(0xFFE4E4E4),
         shape = RoundedCornerShape(4.dp)
     ) {
