@@ -17,7 +17,9 @@ data class CourseEntity(
     @SerializedName("logo_file_url")
     val logoFileUrl: String?,
     @SerializedName("image_file_url")
-    val imageFileUrl: String?
+    val imageFileUrl: String?,
+    @SerializedName("taglist")
+    val tagList: List<String>
 )
 
 fun createMockCourseEntity(): List<CourseEntity> = listOf(
@@ -28,6 +30,7 @@ fun createMockCourseEntity(): List<CourseEntity> = listOf(
         false,
         false,
         "https://cdn-api.elice.io/api/file/3053ea72ad42436b8733aa5c286e4b4c/mining",
-        imageFileUrl = null
+        imageFileUrl = null,
+        listOf()
     )
 )

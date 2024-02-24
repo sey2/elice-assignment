@@ -14,7 +14,8 @@ object EliceCourseListMapper {
                 isRecommended = course.isRecommended,
                 isFree = course.isFree,
                 logoFileUrl = course.logoFileUrl,
-                imageFileUrl = course.imageFileUrl
+                imageFileUrl = course.imageFileUrl,
+                tagList = listOf()
             )
         },
         courseCount = courseCount
