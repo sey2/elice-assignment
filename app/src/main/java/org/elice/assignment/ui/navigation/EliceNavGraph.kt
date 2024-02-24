@@ -1,12 +1,12 @@
-package org.elice.assignment.navigation
+package org.elice.assignment.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.elice.assignment.detail.CourseDetailScreen
-import org.elice.assignment.home.HomeScreen
+import org.elice.assignment.ui.detail.CourseDetailScreen
+import org.elice.assignment.ui.home.HomeScreen
 
 @Composable
 fun SetUpNavGraph(

@@ -1,4 +1,4 @@
-package org.elice.assignment.detail
+package org.elice.assignment.ui.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
