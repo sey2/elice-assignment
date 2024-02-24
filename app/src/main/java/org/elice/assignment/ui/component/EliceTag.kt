@@ -18,13 +18,13 @@ fun EliceTag(
     text: String = ""
 ) {
     Surface(
-        modifier = Modifier.padding(top = 8.dp, end = 4.dp),
+        modifier = modifier.padding(top = 8.dp, end = 4.dp),
         color = Color(0xFFE4E4E4),
         shape = RoundedCornerShape(4.dp)
     ) {
         Text(
             text = text,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            modifier = modifier.padding(horizontal = 8.dp, vertical = 4.dp),
             fontSize = 8.sp,
             fontFamily = NotoBold,
             color = Color.Black,
