@@ -13,7 +13,8 @@ object EliceCourseListMapper {
                 shortDescription = course.shortDescription ?: "",
                 isRecommended = course.isRecommended,
                 isFree = course.isFree,
-                logoFileUrl = course.logoFileUrl
+                logoFileUrl = course.logoFileUrl,
+                imageFileUrl = course.imageFileUrl
             )
         },
         courseCount = courseCount
