@@ -57,6 +57,7 @@ dependencies {
     val retrofit = "2.9.0"
     val okhttp = "4.11.0"
     val hilt = "2.49"
+    val coil = "2.5.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -83,6 +84,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hilt")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:$hilt")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:$coil")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
