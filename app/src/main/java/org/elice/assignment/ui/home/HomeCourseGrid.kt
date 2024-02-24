@@ -47,7 +47,7 @@ internal fun CourseGridList(
             fontFamily = NotoBold,
             fontSize = 16.sp
         )
-        
+
         LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
