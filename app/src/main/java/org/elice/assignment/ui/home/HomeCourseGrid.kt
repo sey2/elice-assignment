@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.elice.assignment.R
+import org.elice.assignment.domain.entities.CourseEntity
+import org.elice.assignment.domain.entities.createMockCourseEntity
 import org.elice.assignment.ui.component.EliceTag
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.NotoBold
@@ -26,34 +28,34 @@ import org.elice.assignment.ui.theme.NotoRegular
 
 @Composable
 internal fun CourseGridList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    courseList: List<CourseEntity> = listOf(),
+    title: String
 ) {
     val mockTags = listOf("태그 1", "태그 2")
 
     Column(
-        modifier = modifier.padding(top = 8.dp)
+        modifier = modifier
+            .padding(start = 16.dp, top = 8.dp)
+            .fillMaxWidth()
     ) {
         Text(
-            text = "무료 과목",
-            modifier.padding(start = 16.dp, bottom = 16.dp),
+            text = title,
+            modifier.padding(bottom = 16.dp),
             fontFamily = NotoBold,
             fontSize = 16.sp
         )
-        Row(
+        LazyRow(
             modifier = Modifier.fillMaxWidth()
         ) {
-            CourseCard(
-                title = "C언어 챌린지C언어 챌린지C언어 챌린지",
-                description = "나의 C언어 실력을 테스트 해보세요!나의 C언어 실력을 테스트 해보세요!",
-                tags = mockTags,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            CourseCard(
-                title = "Title",
-                description = "Short",
-                tags = mockTags,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
+            items(courseList.size) { index ->
+                CourseCard(
+                    title = courseList[index].title,
+                    description = courseList[index].shortDescription ?: "",
+                    tags = mockTags,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
         }
     }
 }
@@ -83,6 +85,7 @@ fun CourseCard(
             fontSize = 14.sp,
             fontFamily = NotoBold,
             maxLines = 2,
+            lineHeight = 24.sp,
             modifier = Modifier
                 .padding(top = 8.dp)
                 .widthIn(max = 200.dp)
@@ -90,28 +93,36 @@ fun CourseCard(
 
         Spacer(modifier = Modifier.padding(vertical = 2.dp))
 
-        Text(
-            text = description,
-            fontSize = 10.sp,
-            fontFamily = NotoRegular,
-            maxLines = 2
-        )
+        if (description != "") {
+            Text(
+                text = description,
+                fontSize = 10.sp,
+                fontFamily = NotoRegular,
+                maxLines = 2,
+                lineHeight = 14.sp,
+                modifier = Modifier
+                    .padding(top = 2.dp)
+                    .widthIn(max = 200.dp)
+            )
+        }
 
-        LazyRow(
+        Row(
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(tags.size) { index ->
-                EliceTag(text = tags[index])
+            tags.forEach { tag ->
+                EliceTag(text = tag)
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun CourseGridPreview() {
     AssignmentTheme {
-        CourseGridList()
+        CourseGridList(
+            courseList = createMockCourseEntity(),
+            title = "무료 과목"
+        )
     }
 }
