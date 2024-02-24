@@ -16,9 +16,13 @@ class EliceHomeViewModel @Inject constructor(
     private val getEliceCourseList: GetEliceCourseList
 ) : ViewModel() {
 
-    private val _eliceCourseList: MutableStateFlow<List<CourseEntity>> =
+    private val _eliceFreeCourseList: MutableStateFlow<List<CourseEntity>> =
         MutableStateFlow(mutableListOf())
-    val eliceCourseList: StateFlow<List<CourseEntity>> = _eliceCourseList
+    val eliceFreeCourseList: StateFlow<List<CourseEntity>> = _eliceFreeCourseList
+
+    private val _eliceRecommendedCourseList: MutableStateFlow<List<CourseEntity>> =
+        MutableStateFlow(mutableListOf())
+    val eliceRecommendedCourseList: StateFlow<List<CourseEntity>> = _eliceRecommendedCourseList
 
     private val _homeState: MutableStateFlow<EliceHomeUiState> =
         MutableStateFlow(EliceHomeUiState.LOADING)
@@ -34,16 +38,26 @@ class EliceHomeViewModel @Inject constructor(
                 offset = 0,
                 count = 10,
                 filterIsRecommended = null,
+                filterIsFree = true
+            ).collectLatest { courseList ->
+                _eliceFreeCourseList.value = courseList
+            }
+
+            getEliceCourseList(
+                offset = 0,
+                count = 10,
+                filterIsRecommended = true,
                 filterIsFree = null
             ).collectLatest { courseList ->
-                _eliceCourseList.value = courseList
-                _homeState.value = EliceHomeUiState.SUCCESS
+                _eliceRecommendedCourseList.value = courseList
             }
+
+            _homeState.value = EliceHomeUiState.SUCCESS
         }
     }
 }
 
 enum class EliceHomeUiState {
     LOADING,
-    SUCCESS
+    SUCCESS,
 }
