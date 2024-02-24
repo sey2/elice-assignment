@@ -14,7 +14,10 @@ data class CourseEntity(
     val shortDescription: String,
     val isRecommended: Boolean,
     val isFree: Boolean,
-    val logoFileUrl: String?
+    @SerializedName("logo_file_url")
+    val logoFileUrl: String?,
+    @SerializedName("image_file_url")
+    val imageFileUrl: String?
 )
 
 fun createMockCourseEntity(): List<CourseEntity> = listOf(
@@ -24,6 +27,7 @@ fun createMockCourseEntity(): List<CourseEntity> = listOf(
         "나의 C언어 실력을 테스트 해보세요!나의 C언어 실력을 테스트 해보세요!",
         false,
         false,
-        "mock"
+        "https://cdn-api.elice.io/api/file/3053ea72ad42436b8733aa5c286e4b4c/mining",
+        imageFileUrl = null
     )
 )
