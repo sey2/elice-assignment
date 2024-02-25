@@ -66,6 +66,7 @@ internal fun CourseDetailScreen(
             ) {
                 CourseTitleAreaWithImage()
                 CourseDetailDescriptionArea()
+                CourseDetailCurriculumArea()
             }
         }
 
