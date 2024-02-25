@@ -19,4 +19,8 @@ class EliceCourseDataSource @Inject constructor(
         filterIsFree,
         filterConditions
     ).courses
+
+    suspend fun getCourse(
+        courseId: Int
+    ) = eliceCourseService.getCourse(courseId).courseDetail
 }
