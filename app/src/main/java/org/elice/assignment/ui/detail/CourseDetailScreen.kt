@@ -1,5 +1,6 @@
 package org.elice.assignment.ui.detail
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -29,58 +31,97 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.ElicePurple
 import org.elice.assignment.ui.theme.EliceRed
 import org.elice.assignment.ui.theme.NotoBold
+import org.elice.assignment.viewmodel.EliceCourseDetailUiState
+import org.elice.assignment.viewmodel.EliceCourseDetailViewModel
 
 @Composable
 internal fun CourseDetailScreen(
     navHostController: NavHostController,
-    courseId: String?
+    courseId: String?,
+    courseDetailViewModel: EliceCourseDetailViewModel = hiltViewModel()
+) {
+    val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
+    val courseDetailState by courseDetailViewModel.courseDetail.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        courseId?.let { id ->
+            courseDetailViewModel.getCourseDetail(id.toInt())
+        }
+        Log.d("detail", courseDetailState.toString())
+    }
+
+    CourseDetailContent(
+        navHostController = navHostController,
+        courseDetailUiState = courseDetailUiState,
+        courseDetailState = courseDetailState
+    )
+}
+
+@Composable
+internal fun CourseDetailContent(
+    navHostController: NavHostController,
+    courseDetailUiState: EliceCourseDetailUiState,
+    courseDetailState: CourseDetailEntity?
 ) {
     var isEnrolled by rememberSaveable { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 64.dp)
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Sharp.KeyboardArrowLeft,
-                    contentDescription = "Back Button",
-                    modifier = Modifier.size(42.dp).clickable { navHostController.popBackStack() }
+        when (courseDetailUiState) {
+            EliceCourseDetailUiState.LOADING -> {
+                // Todo
+            }
+
+            EliceCourseDetailUiState.SUCCESS -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 64.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Sharp.KeyboardArrowLeft,
+                            contentDescription = "Back Button",
+                            modifier = Modifier
+                                .size(42.dp)
+                                .clickable { navHostController.popBackStack() }
+                        )
+                    }
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        CourseTitleAreaWithImage()
+                        CourseDetailDescriptionArea()
+                        CourseDetailCurriculumArea()
+                    }
+                }
+
+                EnrollButton(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .height(84.dp)
+                        .padding(16.dp),
+                    isEnrolled = isEnrolled,
+                    onClick = { isEnrolled = !isEnrolled }
                 )
             }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                CourseTitleAreaWithImage()
-                CourseDetailDescriptionArea()
-                CourseDetailCurriculumArea()
-            }
         }
-
-        EnrollButton(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(84.dp)
-                .padding(16.dp),
-            isEnrolled = isEnrolled,
-            onClick = { isEnrolled = !isEnrolled }
-        )
     }
 }
 
@@ -114,9 +155,10 @@ fun EnrollButton(
 @Composable
 fun PreviewCourseDetailScreen() {
     AssignmentTheme {
-        CourseDetailScreen(
+        CourseDetailContent(
             navHostController = rememberNavController(),
-            courseId = null
+            courseDetailUiState = EliceCourseDetailUiState.SUCCESS,
+            courseDetailState = null
         )
     }
 }
