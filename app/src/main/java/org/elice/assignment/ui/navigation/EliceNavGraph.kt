@@ -24,9 +24,13 @@ fun SetUpNavGraph(
             HomeScreen(navHostController = navController)
         }
         composable(
-            route = Screen.CourseDetail.route
-        ) {
-            CourseDetailScreen(navHostController = navController)
+            route = Screen.CourseDetail.route + "/{courseId}"
+        ) { backStackEntry ->
+            val courseId = backStackEntry.arguments?.getString("courseId")
+            CourseDetailScreen(
+                navHostController = navController,
+                courseId = courseId
+            )
         }
     }
 }

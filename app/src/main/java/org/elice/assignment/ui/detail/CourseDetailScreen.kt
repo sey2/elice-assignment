@@ -1,5 +1,6 @@
 package org.elice.assignment.ui.detail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,7 +38,8 @@ import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
 internal fun CourseDetailScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    courseId: String?
 ) {
     var isEnrolled by rememberSaveable { mutableStateOf(false) }
 
@@ -55,7 +57,7 @@ internal fun CourseDetailScreen(
                 Icon(
                     imageVector = Icons.AutoMirrored.Sharp.KeyboardArrowLeft,
                     contentDescription = "Back Button",
-                    modifier = Modifier.size(42.dp)
+                    modifier = Modifier.size(42.dp).clickable { navHostController.popBackStack() }
                 )
             }
 
@@ -112,6 +114,9 @@ fun EnrollButton(
 @Composable
 fun PreviewCourseDetailScreen() {
     AssignmentTheme {
-        CourseDetailScreen(navHostController = rememberNavController())
+        CourseDetailScreen(
+            navHostController = rememberNavController(),
+            courseId = null
+        )
     }
 }
