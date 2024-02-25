@@ -1,6 +1,7 @@
 package org.elice.assignment.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.CourseEntity
 
 interface EliceCourseRepo {
@@ -11,4 +12,6 @@ interface EliceCourseRepo {
         filterIsFree: Boolean? = null,
         filterConditions: String? = null
     ): Flow<List<CourseEntity>>
+
+    fun getCourse(courseId: Int): Flow<CourseDetailEntity>
 }
