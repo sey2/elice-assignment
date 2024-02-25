@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.elice.assignment.ui.component.MarkdownText
 import org.elice.assignment.ui.theme.AssignmentTheme
+import org.elice.assignment.ui.theme.EliceDeepPurple
 import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.util.createMockMarkDownText
 
@@ -30,7 +31,7 @@ fun CourseDetailDescriptionArea(
             fontSize = 14.sp,
             fontFamily = NotoBold,
             lineHeight = 20.sp,
-            color = Color(0xFF524FA1),
+            color = EliceDeepPurple,
             modifier = Modifier.padding(top = 8.dp)
         )
         Divider(modifier = Modifier.padding(vertical = 10.dp))
