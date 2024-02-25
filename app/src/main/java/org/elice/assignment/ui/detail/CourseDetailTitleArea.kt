@@ -30,7 +30,7 @@ fun CourseTitleAreaWithImage(
     Column(modifier = modifier.fillMaxWidth()) {
 
         Row(
-            modifier = modifier.padding(top = 8.dp, bottom = 8.dp, start = 16.dp),
+            modifier = modifier.padding(bottom = 8.dp, start = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
