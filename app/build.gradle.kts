@@ -58,6 +58,7 @@ dependencies {
     val okhttp = "4.11.0"
     val hilt = "2.49"
     val coil = "2.5.0"
+    val paging = "3.2.1"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -87,6 +88,9 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:$coil")
+
+    /// Paging
+    implementation("androidx.paging:paging-common-ktx:$paging")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
