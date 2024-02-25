@@ -56,8 +56,7 @@ fun CourseTitleAreaWithImage(
             painter = painterResource(id = R.drawable.course_detail_image_file),
             contentDescription = "Course Image",
             modifier = Modifier
-                .aspectRatio(2f)
-                .padding(bottom = 16.dp),
+                .aspectRatio(2f),
             contentScale = ContentScale.FillWidth
         )
     }
