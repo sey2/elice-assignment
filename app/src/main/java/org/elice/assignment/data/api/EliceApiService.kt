@@ -1,5 +1,6 @@
 package org.elice.assignment.data.api
 
+import org.elice.assignment.data.model.EliceCourseDetailResponse
 import org.elice.assignment.data.model.EliceCourseListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -13,5 +14,10 @@ interface EliceApiService {
         @Query("filter_is_free") filterIsFree: Boolean? = null,
         @Query("filter_conditions") filterConditions: String? = null
     ): EliceCourseListResponse
+
+    @GET("org/academy/course/get/")
+    suspend fun getCourse(
+        @Query("course_id") courseId: Int
+    ): EliceCourseDetailResponse
 
 }
