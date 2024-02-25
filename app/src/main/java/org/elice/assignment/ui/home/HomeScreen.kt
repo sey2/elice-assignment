@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.viewmodel.CourseListState
 import org.elice.assignment.viewmodel.EliceHomeUiState
@@ -34,6 +35,7 @@ fun HomeScreen(
     }
 
     HomeContent(
+        navHostController = navHostController,
         eliceHomeUiState = eliceHomeUiState,
         courseListState = courseListState,
         onLoadMoreFreeCourses = { homeViewModel.onLoad(true) },
@@ -43,6 +45,7 @@ fun HomeScreen(
 
 @Composable
 internal fun HomeContent(
+    navHostController: NavHostController,
     eliceHomeUiState: EliceHomeUiState,
     courseListState: CourseListState,
     onLoadMoreFreeCourses: () -> Unit,
@@ -61,12 +64,14 @@ internal fun HomeContent(
             EliceHomeUiState.SUCCESS -> {
                 HomeHeader()
                 CourseGridList(
+                    navHostController,
                     courseList = courseListState.freeCourseList,
                     title = "무료 과목",
                     onLoadMore = onLoadMoreFreeCourses
                 )
                 Spacer(Modifier.padding(vertical = 8.dp))
                 CourseGridList(
+                    navHostController,
                     courseList = courseListState.recommendedCourseList,
                     title = "추천 과목",
                     onLoadMore = onLoadMoreRecommendedCourses
@@ -85,6 +90,7 @@ internal fun HomeContent(
 fun HomePreview() {
     AssignmentTheme {
         HomeContent(
+            navHostController = rememberNavController(),
             eliceHomeUiState = EliceHomeUiState.SUCCESS,
             courseListState = CourseListState( 1, 1),
             onLoadMoreFreeCourses = {},

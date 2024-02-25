@@ -1,6 +1,7 @@
 package org.elice.assignment.ui.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -22,16 +22,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.domain.entities.createMockCourseEntity
 import org.elice.assignment.ui.component.EliceTag
+import org.elice.assignment.ui.navigation.Screen
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.ui.theme.NotoRegular
 
 @Composable
 internal fun CourseGridList(
+    navHostController: NavHostController,
     modifier: Modifier = Modifier,
     courseList: List<CourseEntity> = listOf(),
     title: String,
@@ -62,8 +66,10 @@ internal fun CourseGridList(
                     if (courseList[index].imageFileUrl == null) courseList[index].logoFileUrl else courseList[index].imageFileUrl
 
                 CourseCard(
+                    navHostController = navHostController,
+                    id = courseList[index].id,
                     title = courseList[index].title,
-                    description = courseList[index].shortDescription ?: "",
+                    description = courseList[index].shortDescription,
                     imageUrl = imageUrl ?: "",
                     tags = courseList[index].tagList,
                     modifier = Modifier.padding(end = 8.dp)
@@ -77,6 +83,8 @@ internal fun CourseGridList(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CourseCard(
+    navHostController: NavHostController,
+    id: Int,
     title: String,
     description: String,
     imageUrl: String,
@@ -85,7 +93,9 @@ fun CourseCard(
 ) {
 
     Column(
-        modifier = modifier.padding(end = 16.dp)
+        modifier = modifier
+            .padding(end = 16.dp)
+            .clickable { navHostController.navigate(Screen.CourseDetail.route + "/$id") }
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = imageUrl),
@@ -139,6 +149,7 @@ fun CourseCard(
 fun CourseGridPreview() {
     AssignmentTheme {
         CourseGridList(
+            navHostController = rememberNavController(),
             courseList = createMockCourseEntity(),
             title = "무료 과목",
             onLoadMore = {}
