@@ -59,6 +59,7 @@ dependencies {
     val hilt = "2.49"
     val coil = "2.5.0"
     val paging = "3.2.1"
+    val commonmark = "0.21.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -91,6 +92,9 @@ dependencies {
 
     /// Paging
     implementation("androidx.paging:paging-common-ktx:$paging")
+
+    // Commonmark
+    implementation ("org.commonmark:commonmark:$commonmark")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
