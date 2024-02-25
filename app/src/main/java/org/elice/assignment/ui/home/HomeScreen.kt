@@ -28,7 +28,7 @@ fun HomeScreen(
     homeViewModel: EliceHomeViewModel = hiltViewModel()
 ) {
     val eliceHomeUiState by homeViewModel.homeState.collectAsStateWithLifecycle()
-    val courseListState by homeViewModel.courseListState.collectAsState()
+    val courseListState by homeViewModel.courseListState.collectAsStateWithLifecycle()
 
     LaunchedEffect(true) {
         homeViewModel.onRefresh()
