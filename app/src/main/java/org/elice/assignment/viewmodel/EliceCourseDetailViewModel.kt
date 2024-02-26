@@ -9,16 +9,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
+import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.domain.usecase.course.GetEliceCourse
+import org.elice.assignment.domain.usecase.course.GetEliceLectureList
 import javax.inject.Inject
 
 @HiltViewModel
 class EliceCourseDetailViewModel @Inject constructor(
-    private val getEliceCourse: GetEliceCourse
+    private val getEliceCourse: GetEliceCourse,
+    private val getEliceLectures: GetEliceLectureList
 ) : ViewModel() {
     private val _courseDetailState: MutableStateFlow<CourseDetailEntity?> =
         MutableStateFlow(null)
     val courseDetail: StateFlow<CourseDetailEntity?> = _courseDetailState
+
+    private val _lectureListState: MutableStateFlow<List<LectureEntity>> =
+        MutableStateFlow(listOf())
+    val lectureListState: StateFlow<List<LectureEntity>> = _lectureListState
 
     private val _courseDetailUiState: MutableStateFlow<EliceCourseDetailUiState> =
         MutableStateFlow(EliceCourseDetailUiState.LOADING)
@@ -30,7 +37,19 @@ class EliceCourseDetailViewModel @Inject constructor(
                 _courseDetailState.value = courseDetail
                 _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
             }
-            Log.d("detail", courseDetail.value.toString())
+        }
+    }
+
+    fun getLectures(courseId: Int) {
+        viewModelScope.launch {
+            getEliceLectures(
+                offset = 0,
+                count = 10,
+                courseId
+            ).collectLatest { currentLectureList ->
+                _lectureListState.value = currentLectureList
+                _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
+            }
         }
     }
 

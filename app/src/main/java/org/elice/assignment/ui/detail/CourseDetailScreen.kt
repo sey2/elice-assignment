@@ -51,12 +51,14 @@ internal fun CourseDetailScreen(
 ) {
     val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
     val courseDetailState by courseDetailViewModel.courseDetail.collectAsStateWithLifecycle()
+    val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         courseId?.let { id ->
             courseDetailViewModel.getCourseDetail(id.toInt())
+            courseDetailViewModel.getLectures(id.toInt())
         }
-        Log.d("detail", courseDetailState.toString())
+        Log.d("detail", lectureListState.toString())
     }
 
     CourseDetailContent(
