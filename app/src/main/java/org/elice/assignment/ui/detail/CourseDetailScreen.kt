@@ -36,6 +36,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.elice.assignment.domain.entities.CourseDetailEntity
+import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.ElicePurple
 import org.elice.assignment.ui.theme.EliceRed
@@ -58,13 +59,13 @@ internal fun CourseDetailScreen(
             courseDetailViewModel.getCourseDetail(id.toInt())
             courseDetailViewModel.getLectures(id.toInt())
         }
-        Log.d("detail", lectureListState.toString())
     }
 
     CourseDetailContent(
         navHostController = navHostController,
         courseDetailUiState = courseDetailUiState,
-        courseDetailState = courseDetailState
+        courseDetailState = courseDetailState,
+        lectureListState = lectureListState
     )
 }
 
@@ -72,7 +73,8 @@ internal fun CourseDetailScreen(
 internal fun CourseDetailContent(
     navHostController: NavHostController,
     courseDetailUiState: EliceCourseDetailUiState,
-    courseDetailState: CourseDetailEntity?
+    courseDetailState: CourseDetailEntity?,
+    lectureListState: List<LectureEntity>
 ) {
     var isEnrolled by rememberSaveable { mutableStateOf(false) }
 
@@ -107,7 +109,7 @@ internal fun CourseDetailContent(
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState())
                     ) {
-                        CourseTitleAreaWithImage()
+                        CourseTitleAreaWithImage(courseDetail = courseDetailState)
                         CourseDetailDescriptionArea()
                         CourseDetailCurriculumArea()
                     }
@@ -160,7 +162,8 @@ fun PreviewCourseDetailScreen() {
         CourseDetailContent(
             navHostController = rememberNavController(),
             courseDetailUiState = EliceCourseDetailUiState.SUCCESS,
-            courseDetailState = null
+            courseDetailState = null,
+            lectureListState = listOf()
         )
     }
 }

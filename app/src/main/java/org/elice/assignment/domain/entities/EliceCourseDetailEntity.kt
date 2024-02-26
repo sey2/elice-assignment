@@ -6,7 +6,7 @@ data class CourseDetailEntity(
     val id: Int,
     val title: String,
     @SerializedName("image_file_url")
-    val imageFileUrl: String,
+    val imageFileUrl: String?,
     @SerializedName("logo_file_url")
     val logoFileUrl: String
 )
