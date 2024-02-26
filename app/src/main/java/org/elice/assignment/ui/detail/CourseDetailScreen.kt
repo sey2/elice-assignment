@@ -107,8 +107,14 @@ internal fun CourseDetailContent(
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState())
                     ) {
-                        CourseTitleAreaWithImage(courseDetail = courseDetailState)
-                        CourseDetailDescriptionArea(description = courseDetailState?.description ?: "")
+                        if (courseDetailState?.imageFileUrl == null) {
+                            CourseTitleAreaWithoutImage(courseDetail = courseDetailState)
+                        } else {
+                            CourseTitleAreaWithImage(courseDetail = courseDetailState)
+                        }
+                        if (courseDetailState?.description != "") {
+                            CourseDetailDescriptionArea(description = courseDetailState?.description ?: "")
+                        }
                         CourseDetailCurriculumArea(lectures = lectureListState)
                     }
                 }
