@@ -8,7 +8,7 @@ import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.domain.repository.EliceCourseRepo
 import javax.inject.Inject
 
-class EliceCourseRepoIml @Inject constructor(
+class EliceCourseRepoImpl @Inject constructor(
     private val eliceCourseDataSource: EliceCourseDataSource
 ) : EliceCourseRepo {
 
