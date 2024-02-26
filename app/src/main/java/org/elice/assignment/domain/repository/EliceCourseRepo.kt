@@ -20,4 +20,6 @@ interface EliceCourseRepo {
     suspend fun getEnrollCourse(): Flow<List<Int>>
 
     suspend fun isEnrolledCourse(courseId: Int): Flow<Boolean>
+
+    suspend fun deleteEnrollCourse(courseId: Int)
 }

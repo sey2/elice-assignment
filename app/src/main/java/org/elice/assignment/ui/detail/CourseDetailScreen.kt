@@ -22,9 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,20 +49,11 @@ internal fun CourseDetailScreen(
     val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
     val courseDetailState by courseDetailViewModel.courseDetailState.collectAsStateWithLifecycle()
     val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
-
-    var isEnrolled by rememberSaveable { mutableStateOf(false) }
+    val isEnrolled by courseDetailViewModel.isEnrollCourseState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         courseId?.let { id ->
             courseDetailViewModel.loadData(id.toInt())
-        }
-    }
-
-    LaunchedEffect(key1 = isEnrolled) {
-        if(isEnrolled) {
-            courseId?.let { id ->
-                courseDetailViewModel.localEnrollCourse(id.toInt())
-            }
         }
     }
 
@@ -74,7 +62,7 @@ internal fun CourseDetailScreen(
         courseDetailUiState = courseDetailUiState,
         courseDetailState = courseDetailState,
         lectureListState = lectureListState,
-        onEnrollClick = { isEnrolled = !isEnrolled },
+        onEnrollClick = { courseId?.let { courseDetailViewModel.enrollButtonClick(it.toInt()) } },
         isEnrolled = isEnrolled
     )
 }

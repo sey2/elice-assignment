@@ -1,4 +1,4 @@
-package org.elice.assignment.data.model
+package org.elice.assignment.database
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,4 +16,7 @@ interface EliceCourseDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM enrolled_courses WHERE id = :courseId)")
     suspend fun isCourseEnrolled(courseId: Int): Boolean
+
+    @Query("DELETE FROM enrolled_courses WHERE id = :courseId")
+    suspend fun deleteCourse(courseId: Int)
 }

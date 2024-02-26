@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.domain.usecase.local.AddEnrollCourse
+import org.elice.assignment.domain.usecase.local.DeleteEnrolledCourse
 import org.elice.assignment.domain.usecase.local.IsEnrolledCourse
 import org.elice.assignment.domain.usecase.remote.course.GetEliceCourse
 import org.elice.assignment.domain.usecase.remote.lecture.GetEliceLectureList
@@ -20,7 +21,8 @@ class EliceCourseDetailViewModel @Inject constructor(
     private val getEliceCourse: GetEliceCourse,
     private val getEliceLectures: GetEliceLectureList,
     private val addEnrollCourse: AddEnrollCourse,
-    private val isEnrolledCourse: IsEnrolledCourse
+    private val isEnrolledCourse: IsEnrolledCourse,
+    private val deleteEnrolledCourse: DeleteEnrolledCourse
 ) : ViewModel() {
     private val _courseDetailState: MutableStateFlow<CourseDetailEntity?> =
         MutableStateFlow(null)
@@ -53,9 +55,14 @@ class EliceCourseDetailViewModel @Inject constructor(
         }
     }
 
-    fun addLocalEnrollCourse(courseId: Int) {
+    fun enrollButtonClick(courseId: Int) {
         viewModelScope.launch {
-            addEnrollCourse(courseId)
+            if(isEnrollCourseState.value) {
+                deleteEnrolledCourse(courseId)
+            } else {
+                addEnrollCourse(courseId)
+            }
+            _isEnrollCourseState.value = !isEnrollCourseState.value
         }
     }
 
