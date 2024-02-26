@@ -61,6 +61,7 @@ dependencies {
     val paging = "3.2.1"
     val commonmark = "0.21.0"
     val room = "2.6.1"
+    val lottie = "5.2.0"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -102,6 +103,9 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room")
     implementation("androidx.room:room-ktx:$room")
     kapt("androidx.room:room-compiler:$room")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie-compose:$lottie")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
