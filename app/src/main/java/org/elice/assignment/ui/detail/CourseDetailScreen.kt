@@ -51,13 +51,12 @@ internal fun CourseDetailScreen(
     courseDetailViewModel: EliceCourseDetailViewModel = hiltViewModel()
 ) {
     val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
-    val courseDetailState by courseDetailViewModel.courseDetail.collectAsStateWithLifecycle()
+    val courseDetailState by courseDetailViewModel.courseDetailState.collectAsStateWithLifecycle()
     val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         courseId?.let { id ->
-            courseDetailViewModel.getCourseDetail(id.toInt())
-            courseDetailViewModel.getLectures(id.toInt())
+            courseDetailViewModel.loadData(id.toInt())
         }
     }
 
@@ -110,7 +109,7 @@ internal fun CourseDetailContent(
                             .verticalScroll(rememberScrollState())
                     ) {
                         CourseTitleAreaWithImage(courseDetail = courseDetailState)
-                        CourseDetailDescriptionArea()
+                        CourseDetailDescriptionArea(description = courseDetailState?.description ?: "")
                         CourseDetailCurriculumArea()
                     }
                 }
