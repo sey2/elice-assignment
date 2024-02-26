@@ -39,4 +39,10 @@ class EliceCourseRepoImpl @Inject constructor(
     override suspend fun enrollCourse(courseId: Int) {
         eliceCourseDataSource.enrolledCourse(courseId)
     }
+
+    override suspend fun getEnrollCourse(): Flow<List<Int>> = flow {
+        emit(
+            eliceCourseDataSource.getEnrolledCourses()
+        )
+    }
 }

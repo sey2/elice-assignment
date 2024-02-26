@@ -30,4 +30,7 @@ class EliceCourseDataSource @Inject constructor(
     suspend fun enrolledCourse(courseId: Int) {
         courseDao.insertCourse(EliceEnrolledCourse(courseId))
     }
+
+    suspend fun getEnrolledCourses()
+        = courseDao.getEnrolledCourses()
 }
