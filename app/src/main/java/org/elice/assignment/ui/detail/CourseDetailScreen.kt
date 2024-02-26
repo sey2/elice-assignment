@@ -1,6 +1,5 @@
 package org.elice.assignment.ui.detail
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -110,7 +109,7 @@ internal fun CourseDetailContent(
                     ) {
                         CourseTitleAreaWithImage(courseDetail = courseDetailState)
                         CourseDetailDescriptionArea(description = courseDetailState?.description ?: "")
-                        CourseDetailCurriculumArea()
+                        CourseDetailCurriculumArea(lectures = lectureListState)
                     }
                 }
 
