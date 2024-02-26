@@ -1,5 +1,6 @@
 package org.elice.assignment.util
 
+import com.google.gson.Gson
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
 import org.elice.assignment.domain.entities.LectureEntity
@@ -11,6 +12,9 @@ fun String.markdownToHtml(): String {
 
     return renderer.render(document)
 }
+
+fun List<Int>.toJson(): String
+    = Gson().toJson(mapOf("course_ids" to this))
 
 fun createMockMarkDownText(): String = "### **불필요한 복잡한 이론은 이제 그만**\r\n" +
         "기존에 딥러닝을 배우는 과정은 퍼셉트론, 선형, 비선형 등 복잡하고 모델을 만드는 전문 연구자에게 필요한 내용이 많았습니다. " +
