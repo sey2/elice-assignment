@@ -2,6 +2,7 @@ package org.elice.assignment.data.api
 
 import org.elice.assignment.data.model.EliceCourseDetailResponse
 import org.elice.assignment.data.model.EliceCourseListResponse
+import org.elice.assignment.data.model.EliceLectureListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -19,5 +20,12 @@ interface EliceApiService {
     suspend fun getCourse(
         @Query("course_id") courseId: Int
     ): EliceCourseDetailResponse
+
+    @GET("org/academy/lecture/list/")
+    suspend fun getLectureList(
+        @Query("offset") offset: Int,
+        @Query("count") count: Int,
+        @Query("course_id") courseId: Int
+    ): EliceLectureListResponse
 
 }
