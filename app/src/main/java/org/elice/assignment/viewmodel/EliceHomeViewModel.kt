@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseEntity
+import org.elice.assignment.domain.model.ApiResult
 import org.elice.assignment.domain.usecase.local.GetEnrollCourses
 import org.elice.assignment.domain.usecase.remote.course.GetEliceCourseList
 import org.elice.assignment.util.toJson
@@ -52,9 +53,13 @@ class EliceHomeViewModel @Inject constructor(
                 offset = 0,
                 count = 10,
                 filterConditions = enrolledCourseIdListState.value.toJson()
-            ).collectLatest { courseList ->
-                _enrolledCourseListState.value = courseList
-                _homeState.value = EliceHomeUiState.SUCCESS
+            ).collectLatest { apiResult ->
+                when(apiResult) {
+                    is ApiResult.Success -> {
+                        _enrolledCourseListState.value = apiResult.value
+                        _homeState.value = EliceHomeUiState.SUCCESS
+                    } else -> _homeState.value = EliceHomeUiState.ERROR
+                }
             }
         }
     }
@@ -68,12 +73,18 @@ class EliceHomeViewModel @Inject constructor(
                 offset = currentOffset,
                 count = 10,
                 filterIsFree = isFree
-            ).collectLatest { courseList ->
-                if (courseList.isEmpty() && refresh) {
-                    _homeState.value = EliceHomeUiState.EMPTY
-                } else {
-                    updateCourseList(courseList, isFree)
-                    _homeState.value = EliceHomeUiState.SUCCESS
+            ).collectLatest { apiResult ->
+                when(apiResult) {
+                    is ApiResult.Success -> {
+                        if (apiResult.value.isEmpty() && refresh) {
+                            _homeState.value = EliceHomeUiState.EMPTY
+                        } else {
+                            updateCourseList(apiResult.value, isFree)
+                            _homeState.value = EliceHomeUiState.SUCCESS
+                        }
+                    } else -> {
+                        _homeState.value = EliceHomeUiState.ERROR
+                    }
                 }
             }
         }
@@ -118,4 +129,5 @@ enum class EliceHomeUiState {
     LOADING,
     SUCCESS,
     EMPTY,
+    ERROR
 }

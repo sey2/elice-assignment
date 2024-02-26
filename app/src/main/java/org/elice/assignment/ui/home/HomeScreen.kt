@@ -94,6 +94,10 @@ internal fun HomeContent(
             EliceHomeUiState.EMPTY -> {
                 // Todo
             }
+
+            EliceHomeUiState.ERROR -> {
+                // Todo
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ class EliceCourseDataSource @Inject constructor(
         filterIsRecommended,
         filterIsFree,
         filterConditions
-    ).courses
+    )
 
     suspend fun getCourse(
         courseId: Int

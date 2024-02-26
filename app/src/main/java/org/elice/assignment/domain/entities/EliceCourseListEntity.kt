@@ -2,11 +2,6 @@ package org.elice.assignment.domain.entities
 
 import com.google.gson.annotations.SerializedName
 
-data class EliceCourseListEntity(
-    val courses: List<CourseEntity>,
-    val courseCount: Int
-)
-
 data class CourseEntity(
     val id: Int,
     val title: String,
