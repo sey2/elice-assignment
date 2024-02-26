@@ -67,7 +67,8 @@ fun CourseTitleAreaWithImage(
 
 @Composable
 fun CourseTitleAreaWithoutImage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    courseDetail: CourseDetailEntity?
 ) {
     Column(
         modifier = modifier
@@ -75,7 +76,7 @@ fun CourseTitleAreaWithoutImage(
             .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.detail_title_logo),
+            painter = rememberAsyncImagePainter(model = courseDetail?.logoFileUrl),
             contentDescription = "Course logo",
             modifier = Modifier
                 .size(width = 56.dp, height = 56.dp)
@@ -84,18 +85,20 @@ fun CourseTitleAreaWithoutImage(
         )
 
         Text(
-            text = "C언어 레벨 테스트",
+            text = courseDetail?.title ?: "",
             fontSize = 28.sp,
             fontFamily = NotoBold,
             lineHeight = 36.sp,
+            maxLines = 1,
             modifier = Modifier
                 .padding(vertical = 8.dp)
         )
 
         Text(
-            text = "C언어 레벨 테스트",
+            text = courseDetail?.shortDescription ?: "",
             fontSize = 12.sp,
             fontFamily = NotoRegular,
+            maxLines = 1,
             lineHeight = 20.sp,
             modifier = Modifier
                 .padding(vertical = 8.dp)
@@ -148,6 +151,37 @@ fun PreviewCourseTitleAreaWithImage() {
 @Composable
 fun PreviewCourseTitleAreaWithoutImage() {
     AssignmentTheme {
-        CourseTitleAreaWithoutImage()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, top = 8.dp, bottom = 8.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.detail_title_logo),
+                contentDescription = "Course logo",
+                modifier = Modifier
+                    .size(width = 56.dp, height = 56.dp)
+                    .clip(RoundedCornerShape(10.dp)),
+                contentScale = ContentScale.Fit
+            )
+
+            Text(
+                text = "C언어 레벨 테스트",
+                fontSize = 28.sp,
+                fontFamily = NotoBold,
+                lineHeight = 36.sp,
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+            )
+
+            Text(
+                text = "C언어 레벨 테스트",
+                fontSize = 12.sp,
+                fontFamily = NotoRegular,
+                lineHeight = 20.sp,
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+            )
+        }
     }
 }
