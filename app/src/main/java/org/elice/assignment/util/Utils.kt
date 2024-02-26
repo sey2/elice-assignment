@@ -2,6 +2,7 @@ package org.elice.assignment.util
 
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
+import org.elice.assignment.domain.entities.LectureEntity
 
 fun String.markdownToHtml(): String {
     val parser = Parser.builder().build()
@@ -22,12 +23,9 @@ fun createMockMarkDownText(): String = "### **불필요한 복잡한 이론은 �
         "### **환경설정 없이 바로 코드 실습**\r\n엘리스의 강력한 Runbox를 통해 환경설정 없이 바로 코드를 작성하며 모델을 사용해 봅니다. " +
         "더 이상 CUDA 설치, 버전 관리 등에 시간을 낭비하지 마세요!"
 
-fun createMockCurriculumDescriptions(): List<String> = listOf(
-    "가장 기초적인 문제로 이루어져 있습니다. 한번 부담없이 풀어보시는건 어떨까요?",
-    "반복문, 조건문을 사용해서 풀어야 하는 문제들 입니다.",
-    "배열과 문자열을 다루기도 하고, 반복문, 조건문을 복잡하게 다루는 조금 어려운 문제입니다.",
-    "C언어의 조건문, 반복문, 배열 등은 물론 라이브러리에 있는 함수들까지 사용해야 하는 문제입니다. 한번 도전해 봅시다!"
+fun createMockLectures(): List<LectureEntity> = listOf(
+    LectureEntity(1, "첫 번째 이야기", "가장 기초적인 문제로 이루어져 있습니다. 한번 부담없이 풀어보시는건 어떨까요?"),
+    LectureEntity(2, "두 번째 이야기", "반복문, 조건문을 사용해서 풀어야 하는 문제들 입니다."),
+    LectureEntity(3, "세 번째 이야기", "배열과 문자열을 다루기도 하고, 반복문, 조건문을 복잡하게 다루는 조금 어려운 문제입니다."),
+    LectureEntity(4, "네 번째 이야기",  "C언어의 조건문, 반복문, 배열 등은 물론 라이브러리에 있는 함수들까지 사용해야 하는 문제입니다. 한번 도전해 봅시다!")
 )
-
-fun createMockCurriculumTitles(): List<String> =
-    listOf("첫 번째 이야기", "두 번째 이야기", "세 번째 이야기", "네 번째 이야기")
