@@ -1,4 +1,4 @@
-package org.elice.assignment.domain.usecase
+package org.elice.assignment.domain.usecase.local
 
 import org.elice.assignment.domain.repository.EliceCourseRepo
 import javax.inject.Inject

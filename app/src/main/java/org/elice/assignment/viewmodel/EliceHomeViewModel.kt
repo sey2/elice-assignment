@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseEntity
-import org.elice.assignment.domain.usecase.course.GetEliceCourseList
+import org.elice.assignment.domain.usecase.remote.course.GetEliceCourseList
 import javax.inject.Inject
 
 @HiltViewModel

@@ -1,4 +1,4 @@
-package org.elice.assignment.domain.usecase.course
+package org.elice.assignment.domain.usecase.remote.course
 
 import kotlinx.coroutines.flow.Flow
 import org.elice.assignment.domain.entities.CourseDetailEntity

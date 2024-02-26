@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
-import org.elice.assignment.domain.usecase.EnrollCourse
-import org.elice.assignment.domain.usecase.course.GetEliceCourse
-import org.elice.assignment.domain.usecase.lecture.GetEliceLectureList
+import org.elice.assignment.domain.usecase.local.EnrollCourse
+import org.elice.assignment.domain.usecase.remote.course.GetEliceCourse
+import org.elice.assignment.domain.usecase.remote.lecture.GetEliceLectureList
 import javax.inject.Inject
 
 @HiltViewModel
