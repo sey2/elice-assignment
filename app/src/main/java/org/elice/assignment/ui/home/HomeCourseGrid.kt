@@ -39,7 +39,7 @@ internal fun CourseGridList(
     modifier: Modifier = Modifier,
     courseList: List<CourseEntity> = listOf(),
     title: String,
-    onLoadMore: () -> Unit
+    onLoadMore: () -> Unit = {}
 ) {
     Column(
         modifier = modifier

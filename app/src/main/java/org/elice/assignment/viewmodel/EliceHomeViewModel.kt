@@ -10,25 +10,59 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseEntity
-import org.elice.assignment.domain.usecase.course.GetEliceCourseList
+import org.elice.assignment.domain.usecase.local.GetEnrollCourses
+import org.elice.assignment.domain.usecase.remote.course.GetEliceCourseList
+import org.elice.assignment.util.toJson
 import javax.inject.Inject
 
 @HiltViewModel
 class EliceHomeViewModel @Inject constructor(
-    private val getEliceCourseList: GetEliceCourseList
+    private val getEliceCourseList: GetEliceCourseList,
+    private val getEnrolledCourseList: GetEnrollCourses,
 ) : ViewModel() {
 
     private val _courseListState: MutableStateFlow<CourseListState> =
         MutableStateFlow(CourseListState(1, 1))
     val courseListState: StateFlow<CourseListState> = _courseListState.asStateFlow()
 
+    private val _enrolledCourseIdListState: MutableStateFlow<List<Int>> =
+        MutableStateFlow(listOf())
+    val enrolledCourseIdListState: StateFlow<List<Int>> = _enrolledCourseIdListState
+
+    private val _enrolledCourseListState: MutableStateFlow<List<CourseEntity>> =
+        MutableStateFlow(listOf())
+    val enrolledCourseListState: StateFlow<List<CourseEntity>> = _enrolledCourseListState
+
     private val _homeState: MutableStateFlow<EliceHomeUiState> =
         MutableStateFlow(EliceHomeUiState.LOADING)
     val homeState: StateFlow<EliceHomeUiState> = _homeState
 
+    private suspend fun getEnrolledCourseIds() {
+        getEnrolledCourseList().collectLatest { enrolledList ->
+            _enrolledCourseIdListState.value = enrolledList
+        }
+    }
+
+    suspend fun getEnrolledCourses() {
+        viewModelScope.launch {
+            val enrolledCourseIdsJob = launch { getEnrolledCourseIds() }
+            enrolledCourseIdsJob.join()
+
+            getEliceCourseList(
+                offset = 0,
+                count = 10,
+                filterConditions = enrolledCourseIdListState.value.toJson()
+            ).collectLatest { courseList ->
+                _enrolledCourseListState.value = courseList
+                _homeState.value = EliceHomeUiState.SUCCESS
+            }
+        }
+    }
+
     fun onLoad(isFree: Boolean, refresh: Boolean = false) {
         val currentOffset =
             if (isFree) courseListState.value.freePage * 10 else courseListState.value.recommendedPage * 10
+
         viewModelScope.launch {
             getEliceCourseList(
                 offset = currentOffset,

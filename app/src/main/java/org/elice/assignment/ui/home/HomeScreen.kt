@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.viewmodel.CourseListState
 import org.elice.assignment.viewmodel.EliceHomeUiState
@@ -28,8 +31,10 @@ fun HomeScreen(
 ) {
     val eliceHomeUiState by homeViewModel.homeState.collectAsStateWithLifecycle()
     val courseListState by homeViewModel.courseListState.collectAsStateWithLifecycle()
+    val enrolledCoursesState by homeViewModel.enrolledCourseListState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
+        homeViewModel.getEnrolledCourses()
         homeViewModel.onRefresh()
     }
 
@@ -37,6 +42,7 @@ fun HomeScreen(
         navHostController = navHostController,
         eliceHomeUiState = eliceHomeUiState,
         courseListState = courseListState,
+        enrolledCoursesState = enrolledCoursesState,
         onLoadMoreFreeCourses = { homeViewModel.onLoad(true) },
         onLoadMoreRecommendedCourses = { homeViewModel.onLoad(false) }
     )
@@ -47,6 +53,7 @@ internal fun HomeContent(
     navHostController: NavHostController,
     eliceHomeUiState: EliceHomeUiState,
     courseListState: CourseListState,
+    enrolledCoursesState: List<CourseEntity>,
     onLoadMoreFreeCourses: () -> Unit,
     onLoadMoreRecommendedCourses: () -> Unit
 ) {
@@ -54,6 +61,7 @@ internal fun HomeContent(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .verticalScroll(rememberScrollState())
     ) {
         when (eliceHomeUiState) {
             EliceHomeUiState.LOADING -> {
@@ -75,6 +83,12 @@ internal fun HomeContent(
                     title = "추천 과목",
                     onLoadMore = onLoadMoreRecommendedCourses
                 )
+                Spacer(Modifier.padding(vertical = 8.dp))
+                CourseGridList(
+                    navHostController,
+                    courseList = enrolledCoursesState,
+                    title = "내 학습"
+                )
             }
 
             EliceHomeUiState.EMPTY -> {
@@ -92,6 +106,7 @@ fun HomePreview() {
             navHostController = rememberNavController(),
             eliceHomeUiState = EliceHomeUiState.SUCCESS,
             courseListState = CourseListState( 1, 1),
+            enrolledCoursesState = listOf(),
             onLoadMoreFreeCourses = {},
             onLoadMoreRecommendedCourses = {}
         )

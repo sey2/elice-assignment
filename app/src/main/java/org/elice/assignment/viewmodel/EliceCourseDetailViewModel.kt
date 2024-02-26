@@ -1,6 +1,5 @@
 package org.elice.assignment.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,14 +9,20 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
-import org.elice.assignment.domain.usecase.course.GetEliceCourse
-import org.elice.assignment.domain.usecase.course.GetEliceLectureList
+import org.elice.assignment.domain.usecase.local.AddEnrollCourse
+import org.elice.assignment.domain.usecase.local.DeleteEnrolledCourse
+import org.elice.assignment.domain.usecase.local.IsEnrolledCourse
+import org.elice.assignment.domain.usecase.remote.course.GetEliceCourse
+import org.elice.assignment.domain.usecase.remote.lecture.GetEliceLectureList
 import javax.inject.Inject
 
 @HiltViewModel
 class EliceCourseDetailViewModel @Inject constructor(
     private val getEliceCourse: GetEliceCourse,
-    private val getEliceLectures: GetEliceLectureList
+    private val getEliceLectures: GetEliceLectureList,
+    private val addEnrollCourse: AddEnrollCourse,
+    private val isEnrolledCourse: IsEnrolledCourse,
+    private val deleteEnrolledCourse: DeleteEnrolledCourse
 ) : ViewModel() {
     private val _courseDetailState: MutableStateFlow<CourseDetailEntity?> =
         MutableStateFlow(null)
@@ -31,12 +36,18 @@ class EliceCourseDetailViewModel @Inject constructor(
         MutableStateFlow(EliceCourseDetailUiState.LOADING)
     val courseDetailUiState: StateFlow<EliceCourseDetailUiState> = _courseDetailUiState
 
+    private val _isEnrollCourseState: MutableStateFlow<Boolean> =
+        MutableStateFlow(false)
+    val isEnrollCourseState: StateFlow<Boolean> = _isEnrollCourseState
+
     fun loadData(courseId: Int) {
         _courseDetailUiState.value = EliceCourseDetailUiState.LOADING
         viewModelScope.launch {
             val courseDetailJob = launch { getCourseDetail(courseId) }
             val lecturesJob = launch { getLectures(courseId) }
+            val findEnrolledCourse = launch { findEnrolledCourse(courseId) }
 
+            findEnrolledCourse.join()
             courseDetailJob.join()
             lecturesJob.join()
 
@@ -44,6 +55,16 @@ class EliceCourseDetailViewModel @Inject constructor(
         }
     }
 
+    fun enrollButtonClick(courseId: Int) {
+        viewModelScope.launch {
+            if(isEnrollCourseState.value) {
+                deleteEnrolledCourse(courseId)
+            } else {
+                addEnrollCourse(courseId)
+            }
+            _isEnrollCourseState.value = !isEnrollCourseState.value
+        }
+    }
 
     private suspend fun getCourseDetail(courseId: Int) {
         getEliceCourse(courseId).collectLatest { courseDetail ->
@@ -62,6 +83,11 @@ class EliceCourseDetailViewModel @Inject constructor(
         }
     }
 
+    private suspend fun findEnrolledCourse(courseId: Int) {
+        isEnrolledCourse(courseId).collectLatest { isEnrolled ->
+            _isEnrollCourseState.value = isEnrolled
+        }
+    }
 
 }
 

@@ -22,9 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,6 +49,7 @@ internal fun CourseDetailScreen(
     val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
     val courseDetailState by courseDetailViewModel.courseDetailState.collectAsStateWithLifecycle()
     val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
+    val isEnrolled by courseDetailViewModel.isEnrollCourseState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         courseId?.let { id ->
@@ -63,7 +61,9 @@ internal fun CourseDetailScreen(
         navHostController = navHostController,
         courseDetailUiState = courseDetailUiState,
         courseDetailState = courseDetailState,
-        lectureListState = lectureListState
+        lectureListState = lectureListState,
+        onEnrollClick = { courseId?.let { courseDetailViewModel.enrollButtonClick(it.toInt()) } },
+        isEnrolled = isEnrolled
     )
 }
 
@@ -72,10 +72,10 @@ internal fun CourseDetailContent(
     navHostController: NavHostController,
     courseDetailUiState: EliceCourseDetailUiState,
     courseDetailState: CourseDetailEntity?,
-    lectureListState: List<LectureEntity>
+    lectureListState: List<LectureEntity>,
+    onEnrollClick: ()-> Unit = {},
+    isEnrolled: Boolean = false
 ) {
-    var isEnrolled by rememberSaveable { mutableStateOf(false) }
-
     Box(modifier = Modifier.fillMaxSize()) {
         when (courseDetailUiState) {
             EliceCourseDetailUiState.LOADING -> {
@@ -126,7 +126,7 @@ internal fun CourseDetailContent(
                         .height(84.dp)
                         .padding(16.dp),
                     isEnrolled = isEnrolled,
-                    onClick = { isEnrolled = !isEnrolled }
+                    onClick = { onEnrollClick() }
                 )
             }
         }
