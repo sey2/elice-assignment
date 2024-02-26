@@ -35,4 +35,8 @@ class EliceCourseRepoImpl @Inject constructor(
             eliceCourseDataSource.getCourse(courseId)
         )
     }
+
+    override suspend fun enrollCourse(courseId: Int) {
+        eliceCourseDataSource.enrolledCourse(courseId)
+    }
 }

@@ -1,10 +1,13 @@
 package org.elice.assignment.data.source
 
 import org.elice.assignment.data.api.EliceApiService
+import org.elice.assignment.data.model.EliceCourseDao
+import org.elice.assignment.domain.entities.EliceEnrolledCourse
 import javax.inject.Inject
 
 class EliceCourseDataSource @Inject constructor(
-    private val eliceCourseService: EliceApiService
+    private val eliceCourseService: EliceApiService,
+    private val courseDao: EliceCourseDao
 ) {
     suspend fun getCourseList(
         offset: Int,
@@ -23,4 +26,8 @@ class EliceCourseDataSource @Inject constructor(
     suspend fun getCourse(
         courseId: Int
     ) = eliceCourseService.getCourse(courseId).courseDetail
+
+    suspend fun enrolledCourse(courseId: Int) {
+        courseDao.insertCourse(EliceEnrolledCourse(courseId))
+    }
 }

@@ -53,9 +53,19 @@ internal fun CourseDetailScreen(
     val courseDetailState by courseDetailViewModel.courseDetailState.collectAsStateWithLifecycle()
     val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
 
+    var isEnrolled by rememberSaveable { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         courseId?.let { id ->
             courseDetailViewModel.loadData(id.toInt())
+        }
+    }
+
+    LaunchedEffect(key1 = isEnrolled) {
+        if(isEnrolled) {
+            courseId?.let { id ->
+                courseDetailViewModel.localEnrollCourse(id.toInt())
+            }
         }
     }
 
@@ -63,7 +73,9 @@ internal fun CourseDetailScreen(
         navHostController = navHostController,
         courseDetailUiState = courseDetailUiState,
         courseDetailState = courseDetailState,
-        lectureListState = lectureListState
+        lectureListState = lectureListState,
+        onEnrollClick = { isEnrolled = !isEnrolled },
+        isEnrolled = isEnrolled
     )
 }
 
@@ -72,10 +84,10 @@ internal fun CourseDetailContent(
     navHostController: NavHostController,
     courseDetailUiState: EliceCourseDetailUiState,
     courseDetailState: CourseDetailEntity?,
-    lectureListState: List<LectureEntity>
+    lectureListState: List<LectureEntity>,
+    onEnrollClick: ()-> Unit = {},
+    isEnrolled: Boolean = false
 ) {
-    var isEnrolled by rememberSaveable { mutableStateOf(false) }
-
     Box(modifier = Modifier.fillMaxSize()) {
         when (courseDetailUiState) {
             EliceCourseDetailUiState.LOADING -> {
@@ -126,7 +138,7 @@ internal fun CourseDetailContent(
                         .height(84.dp)
                         .padding(16.dp),
                     isEnrolled = isEnrolled,
-                    onClick = { isEnrolled = !isEnrolled }
+                    onClick = { onEnrollClick() }
                 )
             }
         }

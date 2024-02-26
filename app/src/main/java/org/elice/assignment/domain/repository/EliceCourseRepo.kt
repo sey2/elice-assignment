@@ -14,4 +14,6 @@ interface EliceCourseRepo {
     ): Flow<List<CourseEntity>>
 
     fun getCourse(courseId: Int): Flow<CourseDetailEntity>
+
+    suspend fun enrollCourse(courseId: Int)
 }
