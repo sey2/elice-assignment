@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.elice.assignment.ui.theme.ElicePurple
@@ -16,7 +17,7 @@ import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
 fun EliceButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     activateText: String = "",
     deActivateText: String = "",
     isActivate: Boolean,
@@ -35,6 +36,7 @@ fun EliceButton(
             text = if (isActivate) deActivateText else activateText,
             fontSize = 16.sp,
             fontFamily = NotoBold,
+            color = Color.White,
             lineHeight = 24.sp,
             modifier = Modifier
                 .padding(start = 8.dp)

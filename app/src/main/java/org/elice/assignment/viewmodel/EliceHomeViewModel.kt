@@ -38,6 +38,13 @@ class EliceHomeViewModel @Inject constructor(
         MutableStateFlow(EliceHomeUiState.LOADING)
     val homeState: StateFlow<EliceHomeUiState> = _homeState
 
+    init {
+        viewModelScope.launch {
+            getEnrolledCourses()
+            onRefresh()
+        }
+    }
+
     private suspend fun getEnrolledCourseIds() {
         getEnrolledCourseList().collectLatest { enrolledList ->
             _enrolledCourseIdListState.value = enrolledList
