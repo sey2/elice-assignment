@@ -26,21 +26,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.EliceDeepPurple
 import org.elice.assignment.ui.theme.ElicePurple
 import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.ui.theme.NotoRegular
-import org.elice.assignment.util.createMockCurriculumDescriptions
-import org.elice.assignment.util.createMockCurriculumTitles
+import org.elice.assignment.util.createMockLectures
 
 @Composable
 fun CourseDetailCurriculumArea(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    lectures: List<LectureEntity>
 ) {
-    val curriculumTitleList = createMockCurriculumTitles()
-    val curriculumDescription = createMockCurriculumDescriptions()
-
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -57,18 +55,15 @@ fun CourseDetailCurriculumArea(
         Divider(modifier = Modifier.padding(vertical = 10.dp))
 
         TimelineView(
-            titles = curriculumTitleList,
-            descriptions = curriculumDescription,
+            lectures = lectures,
             modifier = Modifier.padding(vertical = 16.dp)
         )
-
     }
 }
 
 @Composable
 fun TimelineView(
-    titles: List<String>,
-    descriptions: List<String>,
+    lectures: List<LectureEntity>,
     modifier: Modifier = Modifier,
     circleColor: Color = ElicePurple,
     lineColor: Color = ElicePurple,
@@ -76,15 +71,15 @@ fun TimelineView(
     lineWidth: Dp = 2.dp
 ) {
     Column(modifier = modifier) {
-        repeat(titles.size) { index ->
+        repeat(lectures.size) { index ->
             TimelineItemView(
-                title = titles[index],
-                description = descriptions[index],
+                title = lectures[index].title,
+                description = lectures[index].description,
                 circleColor = circleColor,
                 lineColor = lineColor,
                 circleRadius = circleRadius,
                 lineWidth = lineWidth,
-                isLastItem = index == titles.size - 1
+                isLastItem = index == lectures.size - 1
             )
         }
     }
@@ -178,6 +173,25 @@ fun TimelineItemView(
 @Composable
 fun PreviewCourseDetailCurriculumArea() {
     AssignmentTheme {
-        CourseDetailCurriculumArea()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 10.dp)
+        ) {
+            Text(
+                text = "커리 큘럼",
+                fontSize = 14.sp,
+                fontFamily = NotoBold,
+                lineHeight = 20.sp,
+                color = EliceDeepPurple,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Divider(modifier = Modifier.padding(vertical = 10.dp))
+
+            TimelineView(
+                lectures = createMockLectures(),
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+        }
     }
 }
