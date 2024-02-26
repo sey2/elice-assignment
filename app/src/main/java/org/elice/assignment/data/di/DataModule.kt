@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.elice.assignment.data.repository.EliceCourseRepoIml
+import org.elice.assignment.data.repository.EliceCourseRepoImpl
+import org.elice.assignment.data.repository.EliceLectureRepoImpl
 import org.elice.assignment.domain.repository.EliceCourseRepo
+import org.elice.assignment.domain.repository.EliceLectureRepo
 import javax.inject.Singleton
 
 @Module
@@ -14,6 +16,12 @@ interface DataModule {
     @Binds
     @Singleton
     fun bindEliceCourseRepository(
-        eliceCourseRepo: EliceCourseRepoIml
+        eliceCourseRepo: EliceCourseRepoImpl
     ): EliceCourseRepo
+
+    @Binds
+    @Singleton
+    fun bindEliceLectureRepository(
+        eliceLectureRepo: EliceLectureRepoImpl
+    ): EliceLectureRepo
 }
