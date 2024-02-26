@@ -21,7 +21,7 @@ class EliceCourseDetailViewModel @Inject constructor(
 ) : ViewModel() {
     private val _courseDetailState: MutableStateFlow<CourseDetailEntity?> =
         MutableStateFlow(null)
-    val courseDetail: StateFlow<CourseDetailEntity?> = _courseDetailState
+    val courseDetailState: StateFlow<CourseDetailEntity?> = _courseDetailState
 
     private val _lectureListState: MutableStateFlow<List<LectureEntity>> =
         MutableStateFlow(listOf())
@@ -31,27 +31,37 @@ class EliceCourseDetailViewModel @Inject constructor(
         MutableStateFlow(EliceCourseDetailUiState.LOADING)
     val courseDetailUiState: StateFlow<EliceCourseDetailUiState> = _courseDetailUiState
 
-    fun getCourseDetail(courseId: Int) {
+    fun loadData(courseId: Int) {
+        _courseDetailUiState.value = EliceCourseDetailUiState.LOADING
         viewModelScope.launch {
-            getEliceCourse(courseId).collectLatest { courseDetail ->
-                _courseDetailState.value = courseDetail
-                _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
-            }
+            val courseDetailJob = launch { getCourseDetail(courseId) }
+            val lecturesJob = launch { getLectures(courseId) }
+
+            courseDetailJob.join()
+            lecturesJob.join()
+
+            _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
         }
     }
 
-    fun getLectures(courseId: Int) {
-        viewModelScope.launch {
-            getEliceLectures(
-                offset = 0,
-                count = 10,
-                courseId
-            ).collectLatest { currentLectureList ->
-                _lectureListState.value = currentLectureList
-                _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
-            }
+
+    private suspend fun getCourseDetail(courseId: Int) {
+        getEliceCourse(courseId).collectLatest { courseDetail ->
+            _courseDetailState.value = courseDetail
+        }
+
+    }
+
+    private suspend fun getLectures(courseId: Int) {
+        getEliceLectures(
+            offset = 0,
+            count = 10,
+            courseId
+        ).collectLatest { currentLectureList ->
+            _lectureListState.value = currentLectureList
         }
     }
+
 
 }
 
