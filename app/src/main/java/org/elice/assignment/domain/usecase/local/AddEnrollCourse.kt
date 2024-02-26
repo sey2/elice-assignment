@@ -3,7 +3,7 @@ package org.elice.assignment.domain.usecase.local
 import org.elice.assignment.domain.repository.EliceCourseRepo
 import javax.inject.Inject
 
-class EnrollCourse @Inject constructor(
+class AddEnrollCourse @Inject constructor(
     private val eliceCourseRepo: EliceCourseRepo
 ) {
     suspend operator fun invoke(courseId: Int)

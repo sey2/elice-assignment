@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
-import org.elice.assignment.domain.usecase.local.EnrollCourse
+import org.elice.assignment.domain.usecase.local.AddEnrollCourse
 import org.elice.assignment.domain.usecase.remote.course.GetEliceCourse
 import org.elice.assignment.domain.usecase.remote.lecture.GetEliceLectureList
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class EliceCourseDetailViewModel @Inject constructor(
     private val getEliceCourse: GetEliceCourse,
     private val getEliceLectures: GetEliceLectureList,
-    private val enrollCourse: EnrollCourse
+    private val addEnrollCourse: AddEnrollCourse
 ) : ViewModel() {
     private val _courseDetailState: MutableStateFlow<CourseDetailEntity?> =
         MutableStateFlow(null)
@@ -47,7 +47,7 @@ class EliceCourseDetailViewModel @Inject constructor(
 
     fun localEnrollCourse(courseId: Int) {
         viewModelScope.launch {
-            enrollCourse(courseId)
+            addEnrollCourse(courseId)
         }
     }
 
