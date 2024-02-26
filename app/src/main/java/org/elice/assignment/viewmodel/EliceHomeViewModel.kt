@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.domain.usecase.local.GetEnrollCourses
-import org.elice.assignment.domain.usecase.remote.course.GetEliceCourse
 import org.elice.assignment.domain.usecase.remote.course.GetEliceCourseList
 import org.elice.assignment.util.toJson
 import javax.inject.Inject
@@ -43,6 +42,7 @@ class EliceHomeViewModel @Inject constructor(
             _enrolledCourseIdListState.value = enrolledList
         }
     }
+
     suspend fun getEnrolledCourses() {
         viewModelScope.launch {
             val enrolledCourseIdsJob = launch { getEnrolledCourseIds() }
@@ -52,8 +52,9 @@ class EliceHomeViewModel @Inject constructor(
                 offset = 0,
                 count = 10,
                 filterConditions = enrolledCourseIdListState.value.toJson()
-            ).collect { courseList ->
+            ).collectLatest { courseList ->
                 _enrolledCourseListState.value = courseList
+                _homeState.value = EliceHomeUiState.SUCCESS
             }
         }
     }

@@ -33,7 +33,7 @@ fun HomeScreen(
     val courseListState by homeViewModel.courseListState.collectAsStateWithLifecycle()
     val enrolledCoursesState by homeViewModel.enrolledCourseListState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(true) {
+    LaunchedEffect(Unit) {
         homeViewModel.getEnrolledCourses()
         homeViewModel.onRefresh()
     }
@@ -87,8 +87,7 @@ internal fun HomeContent(
                 CourseGridList(
                     navHostController,
                     courseList = enrolledCoursesState,
-                    title = "내 학습",
-                    onLoadMore = onLoadMoreRecommendedCourses
+                    title = "내 학습"
                 )
             }
 
