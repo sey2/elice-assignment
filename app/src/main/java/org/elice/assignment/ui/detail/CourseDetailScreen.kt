@@ -1,6 +1,5 @@
 package org.elice.assignment.ui.detail
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +35,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.elice.assignment.domain.entities.CourseDetailEntity
+import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.ElicePurple
 import org.elice.assignment.ui.theme.EliceRed
@@ -50,21 +50,20 @@ internal fun CourseDetailScreen(
     courseDetailViewModel: EliceCourseDetailViewModel = hiltViewModel()
 ) {
     val courseDetailUiState by courseDetailViewModel.courseDetailUiState.collectAsStateWithLifecycle()
-    val courseDetailState by courseDetailViewModel.courseDetail.collectAsStateWithLifecycle()
+    val courseDetailState by courseDetailViewModel.courseDetailState.collectAsStateWithLifecycle()
     val lectureListState by courseDetailViewModel.lectureListState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
         courseId?.let { id ->
-            courseDetailViewModel.getCourseDetail(id.toInt())
-            courseDetailViewModel.getLectures(id.toInt())
+            courseDetailViewModel.loadData(id.toInt())
         }
-        Log.d("detail", lectureListState.toString())
     }
 
     CourseDetailContent(
         navHostController = navHostController,
         courseDetailUiState = courseDetailUiState,
-        courseDetailState = courseDetailState
+        courseDetailState = courseDetailState,
+        lectureListState = lectureListState
     )
 }
 
@@ -72,7 +71,8 @@ internal fun CourseDetailScreen(
 internal fun CourseDetailContent(
     navHostController: NavHostController,
     courseDetailUiState: EliceCourseDetailUiState,
-    courseDetailState: CourseDetailEntity?
+    courseDetailState: CourseDetailEntity?,
+    lectureListState: List<LectureEntity>
 ) {
     var isEnrolled by rememberSaveable { mutableStateOf(false) }
 
@@ -107,9 +107,15 @@ internal fun CourseDetailContent(
                             .fillMaxWidth()
                             .verticalScroll(rememberScrollState())
                     ) {
-                        CourseTitleAreaWithImage()
-                        CourseDetailDescriptionArea()
-                        CourseDetailCurriculumArea()
+                        if (courseDetailState?.imageFileUrl == null) {
+                            CourseTitleAreaWithoutImage(courseDetail = courseDetailState)
+                        } else {
+                            CourseTitleAreaWithImage(courseDetail = courseDetailState)
+                        }
+                        if (courseDetailState?.description != "") {
+                            CourseDetailDescriptionArea(description = courseDetailState?.description ?: "")
+                        }
+                        CourseDetailCurriculumArea(lectures = lectureListState)
                     }
                 }
 
@@ -160,7 +166,8 @@ fun PreviewCourseDetailScreen() {
         CourseDetailContent(
             navHostController = rememberNavController(),
             courseDetailUiState = EliceCourseDetailUiState.SUCCESS,
-            courseDetailState = null
+            courseDetailState = null,
+            lectureListState = listOf()
         )
     }
 }

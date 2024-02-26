@@ -7,7 +7,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,7 +18,8 @@ import org.elice.assignment.util.createMockMarkDownText
 
 @Composable
 fun CourseDetailDescriptionArea(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    description: String
 ) {
     Column(
         modifier = modifier
@@ -37,7 +37,7 @@ fun CourseDetailDescriptionArea(
         Divider(modifier = Modifier.padding(vertical = 10.dp))
 
         MarkdownText(
-            markdownText = createMockMarkDownText(),
+            markdownText = description,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -47,6 +47,25 @@ fun CourseDetailDescriptionArea(
 @Composable
 fun PreviewCourseDetailDescriptionArea() {
     AssignmentTheme {
-        CourseDetailDescriptionArea()
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+        ) {
+            Text(
+                text = "과목 소개",
+                fontSize = 14.sp,
+                fontFamily = NotoBold,
+                lineHeight = 20.sp,
+                color = EliceDeepPurple,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Divider(modifier = Modifier.padding(vertical = 10.dp))
+
+            MarkdownText(
+                markdownText = createMockMarkDownText(),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
 }
