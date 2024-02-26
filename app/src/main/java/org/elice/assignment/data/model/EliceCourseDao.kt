@@ -13,4 +13,7 @@ interface EliceCourseDao {
 
     @Query("SELECT id FROM enrolled_courses")
     suspend fun getEnrolledCourses(): List<Int>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM enrolled_courses WHERE id = :courseId)")
+    suspend fun isCourseEnrolled(courseId: Int): Boolean
 }
