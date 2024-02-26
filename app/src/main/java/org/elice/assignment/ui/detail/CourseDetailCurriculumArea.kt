@@ -145,6 +145,7 @@ fun TimelineItemView(
                 fontSize = 18.sp,
                 fontFamily = NotoBold,
                 lineHeight = 28.sp,
+                maxLines = 1,
                 modifier = Modifier
                     .onGloballyPositioned { coordinates ->
                         val newHeight = coordinates.size.height.toFloat()
