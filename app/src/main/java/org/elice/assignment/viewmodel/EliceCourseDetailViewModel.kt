@@ -1,6 +1,5 @@
 package org.elice.assignment.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,7 +10,7 @@ import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.domain.usecase.course.GetEliceCourse
-import org.elice.assignment.domain.usecase.course.GetEliceLectureList
+import org.elice.assignment.domain.usecase.lecture.GetEliceLectureList
 import javax.inject.Inject
 
 @HiltViewModel
