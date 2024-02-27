@@ -84,7 +84,7 @@ Dagger hilt를 통한 DI를 활용하여 UI에서 필요한 비즈니스 로직�
 
 ### Curriculum Indicator가 기대하는 결과와 다른 문제
 
-그래서 아래 코드와 같이
+TimeLine Indicator의 선이 동적으로 변해야 하는 디자인 요구 사항으로 인해
 Text를 감싸는 Column의 높이(`textColumnHeight`)를 활용해 Line의 End 값을 정해줘서 동적으로 Line의 길이를 정해줘서
 Line을 그려주는 로직을 작성 했습니다.
 
