@@ -1,6 +1,6 @@
 package org.elice.assignment.data.source.local
 
-import org.elice.assignment.database.EliceCourseDao
+import org.elice.assignment.domain.database.EliceCourseDao
 import org.elice.assignment.domain.entities.EliceEnrolledCourse
 import javax.inject.Inject
 

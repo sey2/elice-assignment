@@ -1,4 +1,4 @@
-package org.elice.assignment.database
+package org.elice.assignment.domain.database
 
 import androidx.room.Dao
 import androidx.room.Insert

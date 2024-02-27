@@ -1,6 +1,6 @@
 package org.elice.assignment.data.di
 
-import org.elice.assignment.database.EliceDatabase
+import org.elice.assignment.data.database.EliceDatabase
 import android.content.Context
 import androidx.room.Room
 import dagger.Module
@@ -8,8 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.elice.assignment.data.api.EliceApiService
-import org.elice.assignment.database.EliceCourseDao
+import org.elice.assignment.network.api.EliceApiService
+import org.elice.assignment.domain.database.EliceCourseDao
 import org.elice.assignment.network.NetworkType
 import retrofit2.Retrofit
 import retrofit2.create

@@ -1,8 +1,8 @@
-package org.elice.assignment.data.api
+package org.elice.assignment.network.api
 
-import org.elice.assignment.data.model.EliceCourseDetailResponse
-import org.elice.assignment.data.model.EliceCourseListResponse
-import org.elice.assignment.data.model.EliceLectureListResponse
+import org.elice.assignment.network.model.EliceCourseDetailResponse
+import org.elice.assignment.network.model.EliceCourseListResponse
+import org.elice.assignment.network.model.EliceLectureListResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
