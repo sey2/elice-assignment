@@ -92,9 +92,6 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:$coil")
 
-    /// Paging
-    implementation("androidx.paging:paging-common-ktx:$paging")
-
     // Commonmark
     implementation ("org.commonmark:commonmark:$commonmark")
 
