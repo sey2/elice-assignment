@@ -3,6 +3,7 @@ package org.elice.assignment.domain.repository
 import kotlinx.coroutines.flow.Flow
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.CourseEntity
+import org.elice.assignment.domain.model.ApiResult
 
 interface EliceCourseRepo {
     fun getCourseList(
@@ -11,7 +12,7 @@ interface EliceCourseRepo {
         filterIsRecommended: Boolean? = null,
         filterIsFree: Boolean? = null,
         filterConditions: String? = null
-    ): Flow<List<CourseEntity>>
+    ): Flow<ApiResult<List<CourseEntity>>>
 
     fun getCourse(courseId: Int): Flow<CourseDetailEntity>
 
