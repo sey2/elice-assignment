@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,6 +44,11 @@ fun HomeScreen(
     val enrolledCoursesState by homeViewModel.enrolledCourseListState.collectAsStateWithLifecycle()
 
     var retryClickState by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(retryClickState) {
+        homeViewModel.getEnrolledCourses()
+        homeViewModel.onRefresh()
+    }
 
     HomeContent(
         navHostController = navHostController,
