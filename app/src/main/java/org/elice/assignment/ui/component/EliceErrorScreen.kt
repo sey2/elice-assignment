@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -24,6 +27,7 @@ import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
 fun EliceErrorScreen(
+    navController: NavController = rememberNavController(),
     modifier: Modifier = Modifier,
     onRetry: () -> Unit = {}
 ) {
@@ -36,7 +40,7 @@ fun EliceErrorScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 80.dp),
-            text = "오류가 발생 했습니다.",
+            text = stringResource(R.string.error_occurred),
             color = EliceDeepPurple,
             fontFamily = NotoBold,
             fontSize = 30.sp
@@ -54,7 +58,7 @@ fun EliceErrorScreen(
                 .align(Alignment.BottomCenter),
             onClick = onRetry,
             isActivate = false,
-            activateText = "다시 시도하기"
+            activateText = stringResource(R.string.retry)
         )
     }
 }
