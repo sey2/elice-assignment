@@ -14,7 +14,7 @@ interface EliceCourseRepo {
         filterConditions: String? = null
     ): Flow<ApiResult<List<CourseEntity>>>
 
-    fun getCourse(courseId: Int): Flow<CourseDetailEntity>
+    fun getCourse(courseId: Int): Flow<ApiResult<CourseDetailEntity>>
 
     suspend fun enrollCourse(courseId: Int)
 
