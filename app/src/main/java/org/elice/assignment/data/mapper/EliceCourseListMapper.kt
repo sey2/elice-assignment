@@ -1,6 +1,6 @@
 package org.elice.assignment.data.mapper
 
-import org.elice.assignment.data.model.EliceCourseListResponse
+import org.elice.assignment.network.model.EliceCourseListResponse
 import org.elice.assignment.domain.entities.CourseEntity
 
 object EliceCourseListMapper {

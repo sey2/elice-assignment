@@ -30,6 +30,7 @@ import org.elice.assignment.R
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.component.EliceButton
+import org.elice.assignment.ui.error.EliceErrorScreen
 import org.elice.assignment.ui.component.EliceLoadingWheel
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.viewmodel.EliceCourseDetailUiState
@@ -58,7 +59,12 @@ internal fun CourseDetailScreen(
         courseDetailState = courseDetailState,
         lectureListState = lectureListState,
         onEnrollClick = { courseId?.let { courseDetailViewModel.enrollButtonClick(it.toInt()) } },
-        isEnrolled = isEnrolled
+        isEnrolled = isEnrolled,
+        onRetry = {
+            courseId?.let { id ->
+                courseDetailViewModel.loadData(id.toInt())
+            }
+        }
     )
 }
 
@@ -68,8 +74,9 @@ internal fun CourseDetailContent(
     courseDetailUiState: EliceCourseDetailUiState,
     courseDetailState: CourseDetailEntity?,
     lectureListState: List<LectureEntity>,
-    onEnrollClick: () -> Unit = {},
-    isEnrolled: Boolean = false
+    onEnrollClick: () -> Unit,
+    isEnrolled: Boolean = false,
+    onRetry: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         when (courseDetailUiState) {
@@ -86,6 +93,10 @@ internal fun CourseDetailContent(
                     onEnrollClick = onEnrollClick,
                     isEnrolled = isEnrolled
                 )
+            }
+
+            EliceCourseDetailUiState.ERROR -> {
+                EliceErrorScreen(onRetry = onRetry)
             }
         }
     }
@@ -156,7 +167,9 @@ fun PreviewCourseDetailScreen() {
             navHostController = rememberNavController(),
             courseDetailUiState = EliceCourseDetailUiState.SUCCESS,
             courseDetailState = null,
-            lectureListState = listOf()
+            lectureListState = listOf(),
+            onEnrollClick = {},
+            onRetry = {}
         )
     }
 }

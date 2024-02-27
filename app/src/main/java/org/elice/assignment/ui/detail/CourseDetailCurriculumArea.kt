@@ -22,10 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.elice.assignment.R
 import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.EliceDeepPurple
@@ -45,7 +47,7 @@ fun CourseDetailCurriculumArea(
             .padding(start = 16.dp, end = 16.dp, top = 10.dp)
     ) {
         Text(
-            text = "커리 큘럼",
+            text = stringResource(R.string.curriculm),
             fontSize = 14.sp,
             fontFamily = NotoBold,
             lineHeight = 20.sp,
@@ -180,7 +182,7 @@ fun PreviewCourseDetailCurriculumArea() {
                 .padding(start = 16.dp, end = 16.dp, top = 10.dp)
         ) {
             Text(
-                text = "커리 큘럼",
+                text = stringResource(id = R.string.curriculm),
                 fontSize = 14.sp,
                 fontFamily = NotoBold,
                 lineHeight = 20.sp,

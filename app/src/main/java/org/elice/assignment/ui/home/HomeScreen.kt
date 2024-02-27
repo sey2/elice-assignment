@@ -17,15 +17,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import org.elice.assignment.R
 import org.elice.assignment.domain.entities.CourseEntity
-import org.elice.assignment.ui.component.EliceErrorScreen
+import org.elice.assignment.ui.error.EliceErrorScreen
 import org.elice.assignment.ui.component.EliceLoadingWheel
+import org.elice.assignment.ui.navigation.Screen
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.viewmodel.CourseListState
 import org.elice.assignment.viewmodel.EliceHomeUiState
@@ -52,6 +55,7 @@ fun HomeScreen(
         eliceHomeUiState = eliceHomeUiState,
         courseListState = courseListState,
         enrolledCoursesState = enrolledCoursesState,
+        onSearchClick = { navHostController.navigate(Screen.UnReady.route) },
         onRetryCourses = { retryClickState = !retryClickState },
         onLoadMoreFreeCourses = { homeViewModel.onLoad(true) },
         onLoadMoreRecommendedCourses = { homeViewModel.onLoad(false) }
@@ -64,6 +68,7 @@ internal fun HomeContent(
     eliceHomeUiState: EliceHomeUiState,
     courseListState: CourseListState,
     enrolledCoursesState: List<CourseEntity>,
+    onSearchClick: () -> Unit,
     onRetryCourses: () -> Unit,
     onLoadMoreFreeCourses: () -> Unit,
     onLoadMoreRecommendedCourses: () -> Unit
@@ -80,6 +85,7 @@ internal fun HomeContent(
                 navHostController = navHostController,
                 courseListState = courseListState,
                 enrolledCoursesState = enrolledCoursesState,
+                onSearchClick = onSearchClick,
                 onLoadMoreFreeCourses = onLoadMoreFreeCourses,
                 onLoadMoreRecommendedCourses = onLoadMoreRecommendedCourses
             )
@@ -100,6 +106,7 @@ private fun HomeSuccessScreen(
     navHostController: NavHostController,
     courseListState: CourseListState,
     enrolledCoursesState: List<CourseEntity>,
+    onSearchClick: () -> Unit,
     onLoadMoreFreeCourses: () -> Unit,
     onLoadMoreRecommendedCourses: () -> Unit
 ) {
@@ -109,25 +116,25 @@ private fun HomeSuccessScreen(
             .background(Color.White)
             .verticalScroll(rememberScrollState())
     ) {
-        HomeHeader()
+        HomeHeader(onSearchClick = onSearchClick)
         CourseGridList(
             navHostController,
             courseList = courseListState.freeCourseList,
-            title = "무료 과목",
+            title = stringResource(R.string.free_course),
             onLoadMore = onLoadMoreFreeCourses
         )
         Spacer(Modifier.padding(vertical = 8.dp))
         CourseGridList(
             navHostController,
             courseList = courseListState.recommendedCourseList,
-            title = "추천 과목",
+            title = stringResource(R.string.recommended_course),
             onLoadMore = onLoadMoreRecommendedCourses
         )
         Spacer(Modifier.padding(vertical = 8.dp))
         CourseGridList(
             navHostController,
             courseList = enrolledCoursesState,
-            title = "내 학습"
+            title = stringResource(R.string.my_course)
         )
     }
 }
@@ -141,6 +148,7 @@ fun HomePreview() {
             eliceHomeUiState = EliceHomeUiState.SUCCESS,
             courseListState = CourseListState(1, 1),
             enrolledCoursesState = listOf(),
+            onSearchClick = {},
             onRetryCourses = {},
             onLoadMoreFreeCourses = {},
             onLoadMoreRecommendedCourses = {}

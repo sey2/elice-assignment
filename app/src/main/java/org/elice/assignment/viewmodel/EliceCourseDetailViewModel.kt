@@ -3,12 +3,14 @@ package org.elice.assignment.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
+import org.elice.assignment.domain.model.ApiResult
 import org.elice.assignment.domain.usecase.local.AddEnrollCourse
 import org.elice.assignment.domain.usecase.local.DeleteEnrolledCourse
 import org.elice.assignment.domain.usecase.local.IsEnrolledCourse
@@ -43,15 +45,46 @@ class EliceCourseDetailViewModel @Inject constructor(
     fun loadData(courseId: Int) {
         _courseDetailUiState.value = EliceCourseDetailUiState.LOADING
         viewModelScope.launch {
-            val courseDetailJob = launch { getCourseDetail(courseId) }
-            val lecturesJob = launch { getLectures(courseId) }
-            val findEnrolledCourse = launch { findEnrolledCourse(courseId) }
+            try {
+                getCourseDetail(courseId)
+                getLectures(courseId)
+                findEnrolledCourse(courseId)
+                _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
+            } catch (e: Exception) {
+                _courseDetailUiState.value = EliceCourseDetailUiState.ERROR
+            }
+        }
+    }
 
-            findEnrolledCourse.join()
-            courseDetailJob.join()
-            lecturesJob.join()
+    private suspend fun getCourseDetail(courseId: Int) {
+        getEliceCourse(courseId).collectLatest { apiResult ->
+            when(apiResult) {
+                is ApiResult.Success -> {
+                    _courseDetailState.value = apiResult.value
+                }
+                else -> {
+                    _courseDetailUiState.value = EliceCourseDetailUiState.ERROR
+                    viewModelScope.cancel()
+                }
+            }
+        }
+    }
 
-            _courseDetailUiState.value = EliceCourseDetailUiState.SUCCESS
+    private suspend fun getLectures(courseId: Int) {
+        getEliceLectures(
+            offset = 0,
+            count = 10,
+            courseId
+        ).collectLatest { apiResult ->
+            when(apiResult) {
+                is ApiResult.Success -> {
+                    _lectureListState.value = apiResult.value
+                }
+                else -> {
+                    _courseDetailUiState.value = EliceCourseDetailUiState.ERROR
+                    viewModelScope.cancel()
+                }
+            }
         }
     }
 
@@ -66,23 +99,6 @@ class EliceCourseDetailViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCourseDetail(courseId: Int) {
-        getEliceCourse(courseId).collectLatest { courseDetail ->
-            _courseDetailState.value = courseDetail
-        }
-
-    }
-
-    private suspend fun getLectures(courseId: Int) {
-        getEliceLectures(
-            offset = 0,
-            count = 10,
-            courseId
-        ).collectLatest { currentLectureList ->
-            _lectureListState.value = currentLectureList
-        }
-    }
-
     private suspend fun findEnrolledCourse(courseId: Int) {
         isEnrolledCourse(courseId).collectLatest { isEnrolled ->
             _isEnrollCourseState.value = isEnrolled
@@ -93,5 +109,6 @@ class EliceCourseDetailViewModel @Inject constructor(
 
 enum class EliceCourseDetailUiState {
     LOADING,
-    SUCCESS
+    SUCCESS,
+    ERROR
 }

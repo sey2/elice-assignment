@@ -1,6 +1,6 @@
 package org.elice.assignment.data.source
 
-import org.elice.assignment.data.api.EliceApiService
+import org.elice.assignment.network.api.EliceApiService
 import javax.inject.Inject
 
 class EliceLectureDataSource @Inject constructor(

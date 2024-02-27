@@ -3,7 +3,8 @@ package org.elice.assignment.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import org.elice.assignment.data.mapper.EliceCourseListMapper.toDomain
-import org.elice.assignment.data.source.EliceCourseDataSource
+import org.elice.assignment.data.source.remote.EliceCourseRemoteSource
+import org.elice.assignment.data.source.local.EliceCourseLocalSource
 import org.elice.assignment.data.util.safeFlow
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.CourseEntity
@@ -12,7 +13,8 @@ import org.elice.assignment.domain.repository.EliceCourseRepo
 import javax.inject.Inject
 
 class EliceCourseRepoImpl @Inject constructor(
-    private val eliceCourseDataSource: EliceCourseDataSource
+    private val eliceCourseRemoteSource: EliceCourseRemoteSource,
+    private val eliceCourseLocalSource: EliceCourseLocalSource
 ) : EliceCourseRepo {
 
     override fun getCourseList(
@@ -22,7 +24,7 @@ class EliceCourseRepoImpl @Inject constructor(
         filterIsFree: Boolean?,
         filterConditions: String?
     ): Flow<ApiResult<List<CourseEntity>>> = safeFlow {
-        eliceCourseDataSource.getCourseList(
+        eliceCourseRemoteSource.getCourseList(
             offset,
             count,
             filterIsRecommended,
@@ -31,29 +33,27 @@ class EliceCourseRepoImpl @Inject constructor(
         ).toDomain()
     }
 
-    override fun getCourse(courseId: Int): Flow<CourseDetailEntity> = flow {
-        emit(
-            eliceCourseDataSource.getCourse(courseId)
-        )
+    override fun getCourse(courseId: Int): Flow<ApiResult<CourseDetailEntity>> = safeFlow {
+        eliceCourseRemoteSource.getCourse(courseId)
     }
 
     override suspend fun enrollCourse(courseId: Int) =
-        eliceCourseDataSource.enrolledCourse(courseId)
+        eliceCourseLocalSource.enrolledCourse(courseId)
 
 
     override suspend fun getEnrollCourse(): Flow<List<Int>> = flow {
         emit(
-            eliceCourseDataSource.getEnrolledCourses()
+            eliceCourseLocalSource.getEnrolledCourses()
         )
     }
 
     override suspend fun isEnrolledCourse(courseId: Int): Flow<Boolean> = flow {
         emit(
-            eliceCourseDataSource.isEnrolledCourse(courseId)
+            eliceCourseLocalSource.isEnrolledCourse(courseId)
         )
     }
 
     override suspend fun deleteEnrollCourse(courseId: Int) =
-        eliceCourseDataSource.deleteEnrolledCourse(courseId)
+        eliceCourseLocalSource.deleteEnrolledCourse(courseId)
 
 }

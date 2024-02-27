@@ -1,4 +1,4 @@
-package org.elice.assignment.data.model
+package org.elice.assignment.network.model
 
 import com.google.gson.annotations.SerializedName
 import org.elice.assignment.domain.entities.CourseDetailEntity

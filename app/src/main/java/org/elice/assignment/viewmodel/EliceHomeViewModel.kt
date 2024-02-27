@@ -61,11 +61,13 @@ class EliceHomeViewModel @Inject constructor(
                 count = 10,
                 filterConditions = enrolledCourseIdListState.value.toJson()
             ).collectLatest { apiResult ->
-                when(apiResult) {
+                when (apiResult) {
                     is ApiResult.Success -> {
                         _enrolledCourseListState.value = apiResult.value
                         _homeState.value = EliceHomeUiState.SUCCESS
-                    } else -> _homeState.value = EliceHomeUiState.ERROR
+                    }
+
+                    else -> _homeState.value = EliceHomeUiState.ERROR
                 }
             }
         }
@@ -81,7 +83,7 @@ class EliceHomeViewModel @Inject constructor(
                 count = 10,
                 filterIsFree = isFree
             ).collectLatest { apiResult ->
-                when(apiResult) {
+                when (apiResult) {
                     is ApiResult.Success -> {
                         if (apiResult.value.isEmpty() && refresh) {
                             _homeState.value = EliceHomeUiState.EMPTY
@@ -89,8 +91,14 @@ class EliceHomeViewModel @Inject constructor(
                             updateCourseList(apiResult.value, isFree)
                             _homeState.value = EliceHomeUiState.SUCCESS
                         }
-                    } else -> {
-                        _homeState.value = EliceHomeUiState.ERROR
+                    }
+
+                    else -> {
+                        if (homeState.value == EliceHomeUiState.LOADING) {
+                            _homeState.value = EliceHomeUiState.ERROR
+                        } else if(homeState.value == EliceHomeUiState.ERROR) {
+                            _homeState.value = EliceHomeUiState.LOADING
+                        }
                     }
                 }
             }

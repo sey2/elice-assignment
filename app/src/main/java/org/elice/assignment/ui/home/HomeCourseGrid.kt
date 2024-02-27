@@ -1,6 +1,5 @@
 package org.elice.assignment.ui.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,12 +18,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import org.elice.assignment.domain.entities.CourseEntity
 import org.elice.assignment.domain.entities.createMockCourseEntity
 import org.elice.assignment.ui.component.EliceTag
@@ -32,6 +32,7 @@ import org.elice.assignment.ui.navigation.Screen
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.ui.theme.NotoRegular
+import org.elice.assignment.util.eliceImageBuilder
 
 @Composable
 internal fun CourseGridList(
@@ -91,14 +92,13 @@ fun CourseCard(
     tags: List<String> = listOf(),
     modifier: Modifier = Modifier
 ) {
-
     Column(
         modifier = modifier
             .padding(end = 16.dp)
             .clickable { navHostController.navigate(Screen.CourseDetail.route + "/$id") }
     ) {
-        Image(
-            painter = rememberAsyncImagePainter(model = imageUrl),
+        AsyncImage(
+            model = LocalContext.current.eliceImageBuilder(imageUrl),
             contentDescription = "Course Image",
             modifier = Modifier
                 .size(width = 200.dp, height = 100.dp)
