@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,9 +27,7 @@ import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
 fun EliceUnReadyScreen(
-    navController: NavController = rememberNavController(),
-    modifier: Modifier = Modifier,
-    onRetry: () -> Unit = {}
+    navController: NavController = rememberNavController()
 ) {
     val errorLottieComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_search)
@@ -39,7 +38,7 @@ fun EliceUnReadyScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 80.dp),
-            text = "아직 준비중인 화면입니다.",
+            text = stringResource(R.string.still_preparing),
             color = EliceDeepPurple,
             fontFamily = NotoBold,
             fontSize = 30.sp
@@ -50,14 +49,14 @@ fun EliceUnReadyScreen(
             iterations = LottieConstants.IterateForever
         )
         EliceButton(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(84.dp)
                 .padding(16.dp)
                 .align(Alignment.BottomCenter),
             onClick = { navController.popBackStack() },
             isActivate = false,
-            activateText = "돌아가기"
+            activateText = stringResource(R.string.back)
         )
     }
 }

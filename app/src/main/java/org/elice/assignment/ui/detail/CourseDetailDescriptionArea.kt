@@ -7,9 +7,11 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.elice.assignment.R
 import org.elice.assignment.ui.component.MarkdownText
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.EliceDeepPurple
@@ -53,7 +55,7 @@ fun PreviewCourseDetailDescriptionArea() {
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
             Text(
-                text = "과목 소개",
+                text = stringResource(R.string.subject_introduction),
                 fontSize = 14.sp,
                 fontFamily = NotoBold,
                 lineHeight = 20.sp,

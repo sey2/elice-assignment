@@ -7,4 +7,9 @@
     <string name="free_course">무료 과목</string>
     <string name="recommended_course">추천 과목</string>
     <string name="my_course">내 학습</string>
+    <string name="still_preparing">아직 준비중인 화면입니다.</string>
+    <string name="back">돌아가기</string>
+    <string name="curriculm">커리큘럼</string>
+    <string name="subject_introduction">과목 소개</string>
+    <string name="c_level_test">C언어 레벨 테스트</string>
 </resources>

@@ -28,7 +28,6 @@ import org.elice.assignment.ui.theme.NotoBold
 @Composable
 fun EliceErrorScreen(
     navController: NavController = rememberNavController(),
-    modifier: Modifier = Modifier,
     onRetry: () -> Unit = {}
 ) {
     val errorLottieComposition by rememberLottieComposition(
@@ -51,7 +50,7 @@ fun EliceErrorScreen(
             iterations = LottieConstants.IterateForever
         )
         EliceButton(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .height(84.dp)
                 .padding(16.dp)
