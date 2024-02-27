@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.elice.assignment.ui.component.EliceUnReadyScreen
+import org.elice.assignment.ui.prepartion.ElicePreparingScreen
 import org.elice.assignment.ui.detail.CourseDetailScreen
 import org.elice.assignment.ui.home.HomeScreen
 
@@ -36,7 +36,7 @@ fun SetUpNavGraph(
         composable(
             route = Screen.UnReady.route
         ) {
-            EliceUnReadyScreen(navController = navController)
+            ElicePreparingScreen(navController = navController)
         }
     }
 }

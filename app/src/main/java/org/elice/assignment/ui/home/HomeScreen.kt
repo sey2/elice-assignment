@@ -26,7 +26,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.elice.assignment.R
 import org.elice.assignment.domain.entities.CourseEntity
-import org.elice.assignment.ui.component.EliceErrorScreen
+import org.elice.assignment.ui.error.EliceErrorScreen
 import org.elice.assignment.ui.component.EliceLoadingWheel
 import org.elice.assignment.ui.navigation.Screen
 import org.elice.assignment.ui.theme.AssignmentTheme

@@ -30,7 +30,7 @@ import org.elice.assignment.R
 import org.elice.assignment.domain.entities.CourseDetailEntity
 import org.elice.assignment.domain.entities.LectureEntity
 import org.elice.assignment.ui.component.EliceButton
-import org.elice.assignment.ui.component.EliceErrorScreen
+import org.elice.assignment.ui.error.EliceErrorScreen
 import org.elice.assignment.ui.component.EliceLoadingWheel
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.viewmodel.EliceCourseDetailUiState

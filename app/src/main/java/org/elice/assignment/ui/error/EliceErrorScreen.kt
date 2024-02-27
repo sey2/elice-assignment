@@ -1,4 +1,4 @@
-package org.elice.assignment.ui.component
+package org.elice.assignment.ui.error
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,16 +21,18 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import org.elice.assignment.R
+import org.elice.assignment.ui.component.EliceButton
 import org.elice.assignment.ui.theme.AssignmentTheme
 import org.elice.assignment.ui.theme.EliceDeepPurple
 import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
-fun EliceUnReadyScreen(
-    navController: NavController = rememberNavController()
+fun EliceErrorScreen(
+    navController: NavController = rememberNavController(),
+    onRetry: () -> Unit = {}
 ) {
     val errorLottieComposition by rememberLottieComposition(
-        spec = LottieCompositionSpec.RawRes(R.raw.lottie_search)
+        spec = LottieCompositionSpec.RawRes(R.raw.lottie_error)
     )
 
     Box (modifier = Modifier.fillMaxSize()){
@@ -38,7 +40,7 @@ fun EliceUnReadyScreen(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 80.dp),
-            text = stringResource(R.string.still_preparing),
+            text = stringResource(R.string.error_occurred),
             color = EliceDeepPurple,
             fontFamily = NotoBold,
             fontSize = 30.sp
@@ -54,17 +56,17 @@ fun EliceUnReadyScreen(
                 .height(84.dp)
                 .padding(16.dp)
                 .align(Alignment.BottomCenter),
-            onClick = { navController.popBackStack() },
+            onClick = onRetry,
             isActivate = false,
-            activateText = stringResource(R.string.back)
+            activateText = stringResource(R.string.retry)
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewEliceUnReadyScreen() {
+fun PreviewEliceErrorScreen() {
     AssignmentTheme {
-        EliceUnReadyScreen()
+        EliceErrorScreen()
     }
 }

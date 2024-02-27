@@ -92,7 +92,6 @@ fun CourseCard(
     tags: List<String> = listOf(),
     modifier: Modifier = Modifier
 ) {
-
     Column(
         modifier = modifier
             .padding(end = 16.dp)
