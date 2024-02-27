@@ -23,7 +23,7 @@ class EliceHomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _courseListState: MutableStateFlow<CourseListState> =
-        MutableStateFlow(CourseListState(1, 1))
+        MutableStateFlow(CourseListState(0, 0))
     val courseListState: StateFlow<CourseListState> = _courseListState.asStateFlow()
 
     private val _enrolledCourseIdListState: MutableStateFlow<List<Int>> =
@@ -73,15 +73,20 @@ class EliceHomeViewModel @Inject constructor(
         }
     }
 
-    fun onLoad(isFree: Boolean, refresh: Boolean = false) {
+    fun onLoad(
+        isFree: Boolean?,
+        isRecommended: Boolean?,
+        refresh: Boolean = false
+    ) {
         val currentOffset =
-            if (isFree) courseListState.value.freePage * 10 else courseListState.value.recommendedPage * 10
+            if (isFree != null) courseListState.value.freePage * 10 else courseListState.value.recommendedPage * 10
 
         viewModelScope.launch {
             getEliceCourseList(
                 offset = currentOffset,
                 count = 10,
-                filterIsFree = isFree
+                filterIsFree = isFree,
+                filterIsRecommended = isRecommended
             ).collectLatest { apiResult ->
                 when (apiResult) {
                     is ApiResult.Success -> {
@@ -96,7 +101,7 @@ class EliceHomeViewModel @Inject constructor(
                     else -> {
                         if (homeState.value == EliceHomeUiState.LOADING) {
                             _homeState.value = EliceHomeUiState.ERROR
-                        } else if(homeState.value == EliceHomeUiState.ERROR) {
+                        } else if (homeState.value == EliceHomeUiState.ERROR) {
                             _homeState.value = EliceHomeUiState.LOADING
                         }
                     }
@@ -105,9 +110,12 @@ class EliceHomeViewModel @Inject constructor(
         }
     }
 
-    private fun updateCourseList(courseList: List<CourseEntity>, isFree: Boolean) {
+    private fun updateCourseList(
+        courseList: List<CourseEntity>,
+        isFree: Boolean?
+    ) {
         _courseListState.update { currentState ->
-            if (isFree) {
+            if (isFree != null) {
                 currentState.copy(
                     freeCourseList = currentState.freeCourseList + courseList,
                     freePage = currentState.freePage + (courseList.size / 10)
@@ -122,13 +130,13 @@ class EliceHomeViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        onLoad(isFree = true, refresh = true)
-        onLoad(isFree = false, refresh = true)
+        onLoad(isFree = true, isRecommended = null, refresh = true)
+        onLoad(isFree = null, isRecommended = true, refresh = true)
     }
 
     fun onClearUiState() {
         _homeState.value = EliceHomeUiState.LOADING
-        _courseListState.value = CourseListState(1, 1)
+        _courseListState.value = CourseListState(0, 0)
     }
 
 }
