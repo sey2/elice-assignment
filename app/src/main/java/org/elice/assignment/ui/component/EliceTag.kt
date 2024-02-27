@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
-fun EliceTag(
+internal fun EliceTag(
     modifier: Modifier = Modifier,
     text: String = ""
 ) {

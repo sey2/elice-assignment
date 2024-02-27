@@ -27,10 +27,7 @@ import org.elice.assignment.ui.theme.EliceDeepPurple
 import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
-fun EliceErrorScreen(
-    navController: NavController = rememberNavController(),
-    onRetry: () -> Unit = {}
-) {
+internal fun EliceErrorScreen(onRetry: () -> Unit = {}) {
     val errorLottieComposition by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.lottie_error)
     )

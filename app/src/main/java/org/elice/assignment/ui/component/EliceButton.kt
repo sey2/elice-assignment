@@ -16,7 +16,7 @@ import org.elice.assignment.ui.theme.EliceRed
 import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
-fun EliceButton(
+internal fun EliceButton(
     modifier: Modifier = Modifier,
     activateText: String = "",
     deActivateText: String = "",

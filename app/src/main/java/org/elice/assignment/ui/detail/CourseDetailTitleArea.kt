@@ -28,7 +28,7 @@ import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.ui.theme.NotoRegular
 
 @Composable
-fun CourseTitleAreaWithImage(
+internal fun CourseTitleAreaWithImage(
     modifier: Modifier = Modifier,
     courseDetail: CourseDetailEntity?
 ) {
@@ -68,7 +68,7 @@ fun CourseTitleAreaWithImage(
 }
 
 @Composable
-fun CourseTitleAreaWithoutImage(
+internal fun CourseTitleAreaWithoutImage(
     modifier: Modifier = Modifier,
     courseDetail: CourseDetailEntity?
 ) {
@@ -112,7 +112,7 @@ fun CourseTitleAreaWithoutImage(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCourseTitleAreaWithImage() {
+internal fun PreviewCourseTitleAreaWithImage() {
     AssignmentTheme {
         Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -155,7 +155,7 @@ fun PreviewCourseTitleAreaWithImage() {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCourseTitleAreaWithoutImage() {
+internal fun PreviewCourseTitleAreaWithoutImage() {
     AssignmentTheme {
         Column(
             modifier = Modifier

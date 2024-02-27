@@ -35,7 +35,7 @@ import org.elice.assignment.viewmodel.EliceHomeUiState
 import org.elice.assignment.viewmodel.EliceHomeViewModel
 
 @Composable
-fun HomeScreen(
+internal fun HomeScreen(
     navHostController: NavHostController,
     homeViewModel: EliceHomeViewModel = hiltViewModel()
 ) {
@@ -63,7 +63,7 @@ fun HomeScreen(
 }
 
 @Composable
-internal fun HomeContent(
+private fun HomeContent(
     navHostController: NavHostController,
     eliceHomeUiState: EliceHomeUiState,
     courseListState: CourseListState,
@@ -143,7 +143,7 @@ private fun HomeSuccessScreen(
 
 @Preview
 @Composable
-fun HomePreview() {
+internal fun HomePreview() {
     AssignmentTheme {
         HomeContent(
             navHostController = rememberNavController(),
