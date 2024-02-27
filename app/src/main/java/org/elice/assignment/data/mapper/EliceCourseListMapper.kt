@@ -14,7 +14,7 @@ object EliceCourseListMapper {
                 isFree = course.isFree,
                 logoFileUrl = course.logoFileUrl,
                 imageFileUrl = course.imageFileUrl,
-                tagList = listOf()
+                tagList = course.tagList
             )
         }
 }

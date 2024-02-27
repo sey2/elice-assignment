@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,11 +44,6 @@ fun HomeScreen(
 
     var retryClickState by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(retryClickState) {
-        homeViewModel.getEnrolledCourses()
-        homeViewModel.onRefresh()
-    }
-
     HomeContent(
         navHostController = navHostController,
         eliceHomeUiState = eliceHomeUiState,
@@ -57,8 +51,8 @@ fun HomeScreen(
         enrolledCoursesState = enrolledCoursesState,
         onSearchClick = { navHostController.navigate(Screen.UnReady.route) },
         onRetryCourses = { retryClickState = !retryClickState },
-        onLoadMoreFreeCourses = { homeViewModel.onLoad(true) },
-        onLoadMoreRecommendedCourses = { homeViewModel.onLoad(false) }
+        onLoadMoreFreeCourses = { homeViewModel.onLoad(isFree = true, isRecommended = null) },
+        onLoadMoreRecommendedCourses = { homeViewModel.onLoad(isFree = null, isRecommended = true) }
     )
 }
 
@@ -131,11 +125,13 @@ private fun HomeSuccessScreen(
             onLoadMore = onLoadMoreRecommendedCourses
         )
         Spacer(Modifier.padding(vertical = 8.dp))
-        CourseGridList(
-            navHostController,
-            courseList = enrolledCoursesState,
-            title = stringResource(R.string.my_course)
-        )
+        if (enrolledCoursesState.isNotEmpty()) {
+            CourseGridList(
+                navHostController,
+                courseList = enrolledCoursesState,
+                title = stringResource(R.string.my_course)
+            )
+        }
     }
 }
 
