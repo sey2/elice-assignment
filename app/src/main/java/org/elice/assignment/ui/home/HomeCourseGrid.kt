@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -111,6 +112,7 @@ fun CourseCard(
             fontSize = 14.sp,
             fontFamily = NotoBold,
             maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
             lineHeight = 24.sp,
             modifier = Modifier
                 .padding(top = 8.dp)
@@ -125,6 +127,7 @@ fun CourseCard(
                 fontSize = 10.sp,
                 fontFamily = NotoRegular,
                 maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 lineHeight = 14.sp,
                 modifier = Modifier
                     .padding(top = 2.dp)
@@ -137,7 +140,7 @@ fun CourseCard(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             maxItemsInEachRow = 4
         ) {
-            tags.forEach { tag ->
+            tags.take(8).forEach { tag ->
                 EliceTag(text = tag)
             }
         }
