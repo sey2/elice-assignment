@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -91,6 +92,7 @@ fun CourseTitleAreaWithoutImage(
             fontFamily = NotoBold,
             lineHeight = 36.sp,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .padding(vertical = 8.dp)
         )
@@ -100,6 +102,7 @@ fun CourseTitleAreaWithoutImage(
             fontSize = 12.sp,
             fontFamily = NotoRegular,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
             lineHeight = 20.sp,
             modifier = Modifier
                 .padding(vertical = 8.dp)
@@ -132,6 +135,8 @@ fun PreviewCourseTitleAreaWithImage() {
                     fontSize = 16.sp,
                     fontFamily = NotoBold,
                     lineHeight = 24.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .padding(start = 8.dp)
                 )
@@ -171,6 +176,8 @@ fun PreviewCourseTitleAreaWithoutImage() {
                 fontSize = 28.sp,
                 fontFamily = NotoBold,
                 lineHeight = 36.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .padding(vertical = 8.dp)
             )
