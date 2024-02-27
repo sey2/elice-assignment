@@ -1,4 +1,4 @@
-## :rabbit: 엘리스 안드로이드 과제
+## :rabbit: 엘리스 안드로이드 과제 (24.02.24 ~ 24.02.27)
 ### 엘리스 Android 개발자 (채용) 미니 프로젝트에 참여할 기회를 주신 것에 감사 드립니다.
 
 ### 데모 영상
@@ -94,7 +94,7 @@ textColumnHeight의 초기 값 0을 이용해서 Line을 그려서 기대하는 
 (실제로 프리뷰에서도 강제로 리빌드 해주어야지 기대하는 결과가 나왔습니다.)
 
 ```kotlin 
-        Canvas(
+Canvas(
   modifier = Modifier
     .width(16.dp)
     .height(textColumnHeight)
@@ -138,7 +138,7 @@ Column(
 그래서 위와 같은 문제를 LocalDensity.current를 활용해 해결했습니다.
 
 ```kotlin 
-        Canvas(
+Canvas(
   modifier = Modifier
     .width(16.dp)
     .height(with(LocalDensity.current) { textColumnHeight.toDp() })
