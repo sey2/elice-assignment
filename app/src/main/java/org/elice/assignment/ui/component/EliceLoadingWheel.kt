@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 @Composable
-fun EliceLoadingWheel(modifier: Modifier) {
+internal fun EliceLoadingWheel(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier
             .size(120.dp)

@@ -103,7 +103,7 @@ internal fun CourseDetailContent(
 }
 
 @Composable
-internal fun CourseSuccessView(
+private fun CourseSuccessView(
     modifier: Modifier = Modifier,
     navHostController: NavHostController,
     courseDetailState: CourseDetailEntity?,
@@ -161,7 +161,7 @@ internal fun CourseSuccessView(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCourseDetailScreen() {
+internal fun PreviewCourseDetailScreen() {
     AssignmentTheme {
         CourseDetailContent(
             navHostController = rememberNavController(),

@@ -27,7 +27,7 @@ import org.elice.assignment.ui.theme.EliceDeepPurple
 import org.elice.assignment.ui.theme.NotoBold
 
 @Composable
-fun ElicePreparingScreen(
+internal fun ElicePreparingScreen(
     navController: NavController = rememberNavController()
 ) {
     val errorLottieComposition by rememberLottieComposition(
@@ -64,7 +64,7 @@ fun ElicePreparingScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewEliceUnReadyScreen() {
+internal fun PreviewEliceUnReadyScreen() {
     AssignmentTheme {
         ElicePreparingScreen()
     }
