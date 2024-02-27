@@ -1,9 +1,6 @@
 package org.elice.assignment.data.source.remote
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import org.elice.assignment.network.api.EliceApiService
-import org.elice.assignment.domain.entities.CourseDetailEntity
 import javax.inject.Inject
 
 class EliceCourseRemoteSource @Inject constructor(
