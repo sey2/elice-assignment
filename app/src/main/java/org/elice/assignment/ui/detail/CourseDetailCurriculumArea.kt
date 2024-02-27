@@ -37,7 +37,7 @@ import org.elice.assignment.ui.theme.NotoRegular
 import org.elice.assignment.util.createMockLectures
 
 @Composable
-fun CourseDetailCurriculumArea(
+internal fun CourseDetailCurriculumArea(
     modifier: Modifier = Modifier,
     lectures: List<LectureEntity>
 ) {
@@ -64,7 +64,7 @@ fun CourseDetailCurriculumArea(
 }
 
 @Composable
-fun TimelineView(
+internal fun TimelineView(
     lectures: List<LectureEntity>,
     modifier: Modifier = Modifier,
     circleColor: Color = ElicePurple,
@@ -88,7 +88,7 @@ fun TimelineView(
 }
 
 @Composable
-fun TimelineItemView(
+internal fun TimelineItemView(
     title: String,
     description: String,
     circleColor: Color,
@@ -174,7 +174,7 @@ fun TimelineItemView(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCourseDetailCurriculumArea() {
+internal fun PreviewCourseDetailCurriculumArea() {
     AssignmentTheme {
         Column(
             modifier = Modifier

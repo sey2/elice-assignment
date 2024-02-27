@@ -8,7 +8,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import org.elice.assignment.util.markdownToHtml
 
 @Composable
-fun MarkdownText(
+internal fun MarkdownText(
     markdownText: String,
     modifier: Modifier = Modifier
 ) {

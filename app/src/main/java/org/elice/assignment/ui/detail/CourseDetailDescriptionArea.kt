@@ -19,7 +19,7 @@ import org.elice.assignment.ui.theme.NotoBold
 import org.elice.assignment.util.createMockMarkDownText
 
 @Composable
-fun CourseDetailDescriptionArea(
+internal fun CourseDetailDescriptionArea(
     modifier: Modifier = Modifier,
     description: String
 ) {
@@ -47,7 +47,7 @@ fun CourseDetailDescriptionArea(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCourseDetailDescriptionArea() {
+internal fun PreviewCourseDetailDescriptionArea() {
     AssignmentTheme {
         Column(
             modifier = Modifier
